@@ -1,0 +1,29 @@
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;    
+}
+
+.d-flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background-container{
+    background-image: url('./img/bg-window.png');
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;    
+}
+
+.border-canvas{
+    background: linear-gradient(191deg, rgba(247,194,102,1) 0%, rgba(160,34,10,1) 100%);
+    width: 667px;
+    height: 375px;
+}
+
+canvas{
+    background-color: black;    
+}
