@@ -9,16 +9,21 @@
     <link rel="apple-touch-icon" sizes="180x180" href="./img/favicon-chicken.png">
 
     <link rel="stylesheet" href="./style.css">
+    <script src="./models/world.class.js"></script>
+    <script src="./models/movable-object.class.js"></script>
+    <script src="./models/character.class.js"></script>
+    <script src="./models/chicken.class.js"></script>
+    <script src="./js/game.js"></script>
 
 </head>
-<body>
+<body onload="init()">
 
     
     <div class="background-container d-flex-center">
 
         <!-- <h1>El Pollo Loco</h1> -->
         <div class="border-canvas d-flex-center">
-            <canvas width="607px" height="334px"></canvas>
+            <canvas id="canvas" width="607px" height="334px"></canvas>
         </div>
         
 
