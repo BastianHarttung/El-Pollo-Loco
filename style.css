@@ -19,7 +19,7 @@ body{
 }
 
 .border-canvas{
-    background: linear-gradient(191deg, rgba(247,194,102,1) 0%, rgba(160,34,10,1) 100%);
+    background: linear-gradient(180deg, rgb(0, 95, 133) 0%, rgb(104, 17, 0) 100%);
     width: 667px;
     height: 375px;
 }
