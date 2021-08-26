@@ -1,5 +1,10 @@
 class World {
     
+    clouds = [
+        new Clouds(),
+        new Clouds()
+        ]
+
     character = new Character();
     enemies = [
         new Chicken(),
@@ -26,6 +31,10 @@ class World {
 
         this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
         
+        this.clouds.forEach(cloud => {
+            this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height);
+        });        
+        
         /* for (let i = 0; i < this.enemies.length; i++) {
             const enemy = this.enemies[i]; 
             this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
@@ -38,8 +47,19 @@ class World {
         // Draw() wird immer wieder aufgerufen je nach leistung des pcs
         let self = this;
         requestAnimationFrame(function () {
-            self.draw();
+            self.draw();            
         });
+
+        this.walkingEnemies()
+    }
+
+    walkingEnemies(){
+        setInterval(() => {
+            this.enemies.forEach(enemy => {
+                enemy.x = enemy.x -5
+            })
+        }, 1000);
+
     }
 
 }
