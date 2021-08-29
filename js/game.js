@@ -1,5 +1,7 @@
 let canvas;
 let world;
+let moveRightVar;
+let moveLeftVar;
 
 function init(){
     canvas =document.getElementById('canvas');
@@ -11,10 +13,17 @@ function init(){
 }
 
 function moveRight() {
-    world.character.x = world.character.x + 10
-    
+    setInterval(() => {            
+        world.character.x += 1;            
+    }, 1000/60);    
 }
 
 function moveLeft() {
-    world.character.x = world.character.x -10
+    setInterval(() => {            
+        world.character.x -= 1;            
+    }, 1000/60); 
+}
+
+function stopIntervall(direction) {
+    clearInterval(direction);    
 }

@@ -63,14 +63,6 @@ class World {
         })   
     }   
     
-    /**
-     * Intervall for Walking Enemies
-     * 
-     */
-     walkingEnemies(){
-        setInterval(() => {            
-            this.x -= Math.random()*5;            
-        }, 1000/60);
-    };
+    
 }
 
