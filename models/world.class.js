@@ -1,18 +1,11 @@
 class World {
     
-    /* background = new Background();
-    clouds = [
-        new Clouds(),        
-        ];
-    hills = new Hills();
-    bgcacti = new BgCacti();
-    ground = new Ground(); */
-    backgroundObjects = [
-        new Background(),
-        new Clouds(),
-        new Hills(),
-        new BgCacti(),
-        new Ground()
+    backgroundObjects = [        
+        new BackgroundObjects('../img/5.Fondo/Capas/5.cielo_1920-1080px.png'),      /* Background */
+        new BackgroundObjects('../img/5.Fondo/Capas/4.nubes/Completo.png'),         /* Clouds */
+        new BackgroundObjects('../img/5.Fondo/Capas/3.Fondo3/Completo.png'),        /* Hills */
+        new BackgroundObjects('../img/5.Fondo/Capas/2.Fondo2/completo.png'),        /* BG Cacti */
+        new BackgroundObjects('../img/5.Fondo/Capas/1.suelo-fondo1/completo.png'),  /* Ground */        
     ]
 
     character = new Character();
@@ -37,44 +30,41 @@ class World {
      * 
      */
     draw(){
-        /* Clear canvas */
-        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height)
+        
+        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);  /* Clear canvas */
                 
-        /* Background */ 
-        this.backgroundObjects.forEach(bgObject => {
-            this.ctx.drawImage(bgObject.img, bgObject.x, bgObject.y, bgObject.width, bgObject.height)
-        })       
-        /* this.ctx.drawImage(this.background.img, this.background.x, this.background.y, this.background.width, this.background.height);
-        
-        this.clouds.forEach(cloud => {
-            this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height);
-        });  
+         
+        this.addObjectsToMap(this.backgroundObjects);   /* Background */        
+        this.addObjectsToMap(this.enemies);             /* Enemies */         
+        this.addToMap(this.character);                  /* Character */
 
-        this.ctx.drawImage(this.hills.img, this.hills.x, this.hills.y, this.hills.width, this.hills.height)     
-
-        this.ctx.drawImage(this.bgcacti.img, this.bgcacti.x, this.bgcacti.y, this.bgcacti.width, this.bgcacti.height)     
-
-        this.ctx.drawImage(this.ground.img, this.ground.x, this.ground.y, this.ground.width, this.ground.height) */     
-        
-               
-        /* Character */
-        this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
-        
-        /* Enemies */
-        this.enemies.forEach(enemy => {
-            this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
-        });
-        
         // Draw() wird immer wieder aufgerufen je nach leistung des pcs
         let self = this;
         requestAnimationFrame(function () {
             self.draw();            
         });
 
-        /* Gegner laufen */
-        this.walkingEnemies()
+        
+        this.walkingEnemies();                          /* Gegner laufen */
     }
-
+        
+    /**
+     * Draw image of movable Object short
+     * @param {*} movableObject 
+     */
+    addToMap(movableObject){
+        this.ctx.drawImage(movableObject.img, movableObject.x, movableObject.y, movableObject.width, movableObject.height);
+    }
+    
+    /**
+     * for Each loop for object arrays short
+     */
+    addObjectsToMap(objectArray){
+        objectArray.forEach(object => {
+            this.addToMap(object);
+        })   
+    }   
+    
     /**
      * Intervall for Walking Enemies
      * 
@@ -86,5 +76,5 @@ class World {
             })
         }, 1000);
     }
-
 }
+
