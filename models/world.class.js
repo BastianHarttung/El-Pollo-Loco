@@ -1,5 +1,7 @@
 class World {
-    
+
+    canvas;
+    ctx;
     backgroundObjects = [        
         new BackgroundObjects('../img/5.Fondo/Capas/5.cielo_1920-1080px.png'),      /* Background */
         new BackgroundObjects('../img/5.Fondo/Capas/4.nubes/Completo.png'),         /* Clouds */
@@ -7,8 +9,6 @@ class World {
         new BackgroundObjects('../img/5.Fondo/Capas/2.Fondo2/completo.png'),        /* BG Cacti */
         new BackgroundObjects('../img/5.Fondo/Capas/1.suelo-fondo1/completo.png'),  /* Ground */        
     ]
-
-    character = new Character();
     enemies = [
         new Chicken(),
         new Chicken(),
@@ -16,9 +16,8 @@ class World {
         new Chick(),
         new Chick()
         ];
-    canvas;
-    ctx;
-    
+    character = new Character();
+        
     constructor(canvas){
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -44,8 +43,7 @@ class World {
             self.draw();            
         });
 
-        
-        this.walkingEnemies();                          /* Gegner laufen */
+                
     }
         
     /**
@@ -69,12 +67,10 @@ class World {
      * Intervall for Walking Enemies
      * 
      */
-    walkingEnemies(){
-        setInterval(() => {
-            this.enemies.forEach(enemy => {
-                enemy.x = enemy.x -5
-            })
-        }, 1000);
-    }
+     walkingEnemies(){
+        setInterval(() => {            
+            this.x -= Math.random()*5;            
+        }, 1000/60);
+    };
 }
 

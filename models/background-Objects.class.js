@@ -7,6 +7,15 @@ class BackgroundObjects extends MovableObject{
     constructor(imagePath){
         super().loadImage(imagePath)
         
+        this.animate();
     }
     
+    /**
+     * Move Object every second
+     */
+    animate(){
+        setInterval(() => {
+            this.x -= 1;
+        }, 1000/60);        
+    }
 }
