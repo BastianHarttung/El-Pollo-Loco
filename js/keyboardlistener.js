@@ -1,12 +1,23 @@
-document.addEventListener('keydown', (event) => {
-    /* var name = event.key; */
+let left = false;
+let right = false;
+let up = false;
+let space = false;
+
+
+document.addEventListener('keydown', (event) => {    
+    
+    console.log('taste gedrückt', event);
+    
     var code = event.code;
 
-    if (code == 'ArrowRight') {
-        moveRight()
+    if (code == 'ArrowRight') { 
+        event.repeat = false;             
+        right = true;
+        world.moveRight(right);
         
     } if(code == 'ArrowLeft'){
-        moveLeft()
+        left = true;
+        world.moveLeft();
     }
 
     // Alert the key name and key code on keydown
@@ -14,15 +25,12 @@ document.addEventListener('keydown', (event) => {
     
   }, false);
 
-document.addEventListener('keyup', (event) => {
-    var code = event.code;
+  document.addEventListener('keyup', (event) => {    
+    console.log('taste losgelassen', event)
+    right = false;
+    left = false;
+    
+  }, false);
 
-    if(code == 'ArrowRight') {
-         console.log('stop right');
-         clearInterval(moveRightVar);
-    } if (code == 'ArrowLeft') {
-        console.log('stop left');
-        clearInterval(moveLeftVar);
-    }       
 
-})
+

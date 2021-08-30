@@ -6,6 +6,7 @@ class MovableObject {
     width=100;
     availableImages = {};
     randomNr = 1+ Math.random() *2;
+    currentImage = 0;
 
     loadImage(path){
         this.img = new Image();
@@ -13,20 +14,16 @@ class MovableObject {
     };
 
     /**
-     * animate Character
+     * animate Character and Enemies
      * @param {Array} array = ['img/image1.png', 'img/image2.png'] 
      */
     loadImages(array){
         array.forEach((path) => {
             let img = new Image();
             img.src = path;
-            this.availableImages[path] = path;
+            this.availableImages[path] = img;
         })        
-    };
-
-    moveLeft() {
-                
-    };
+    };    
 
     /**
      * Intervall for Walking Enemies
@@ -36,5 +33,9 @@ class MovableObject {
         setInterval(() => {            
             this.x -= this.randomNr            
         }, 1000/60);
-    }
+    }    
+
+    
+    
+       
 }

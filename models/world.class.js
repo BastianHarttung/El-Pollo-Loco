@@ -4,7 +4,7 @@ class World {
     ctx;
     backgroundObjects = [        
         new BackgroundObjects('../img/5.Fondo/Capas/5.cielo_1920-1080px.png'),      /* Background */
-        new BackgroundObjects('../img/5.Fondo/Capas/4.nubes/Completo.png'),         /* Clouds */
+        new Clouds('../img/5.Fondo/Capas/4.nubes/Completo.png'),                    /* Clouds */
         new BackgroundObjects('../img/5.Fondo/Capas/3.Fondo3/Completo.png'),        /* Hills */
         new BackgroundObjects('../img/5.Fondo/Capas/2.Fondo2/completo.png'),        /* BG Cacti */
         new BackgroundObjects('../img/5.Fondo/Capas/1.suelo-fondo1/completo.png'),  /* Ground */        
@@ -42,8 +42,7 @@ class World {
         requestAnimationFrame(function () {
             self.draw();            
         });
-
-                
+                       
     }
         
     /**
@@ -63,6 +62,27 @@ class World {
         })   
     }   
     
+    /**
+     * Move Background left in different layers
+     */
+     moveRight() {
+        world.character.walkingAnimation();  
+        world.character.x += 1;
+        world.backgroundObjects[2].x -= 2;   
+        world.backgroundObjects[3].x -= 3.5;   
+        world.backgroundObjects[4].x -= 5;      
+    }
+
+    /**
+     * Move Background right in different layers
+     */
+    moveLeft() {     
+        world.character.walkingAnimation();
+        world.character.x -= 1;
+        world.backgroundObjects[2].x += 2;   
+        world.backgroundObjects[3].x += 3.5;   
+        world.backgroundObjects[4].x += 5;
+    }
     
 }
 
