@@ -6,8 +6,8 @@ class World {
     camera_x = 0;
     width_background = 1187;
 
-    backgroundObjects = level1.backgroundObjects;
-    enemies = level1.enemies;
+    level = level1;
+
     character = new Character();
         
     constructor(canvas, keyboard){
@@ -35,8 +35,8 @@ class World {
                       
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.backgroundObjects);   /* Background */        
-        this.addObjectsToMap(this.enemies);             /* Enemies */         
+        this.addObjectsToMap(this.level.backgroundObjects);   /* Background */        
+        this.addObjectsToMap(this.level.enemies);             /* Enemies */         
         this.addToMap(this.character);                  /* Character */
 
         this.ctx.translate(-this.camera_x, 0);

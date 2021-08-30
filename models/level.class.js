@@ -1,7 +1,7 @@
 class Level{
     backgroundObjects;
-    enemies;
-    widthBackground = 1187;
+    enemies;    
+    level_end_x = 1766;
     
     constructor(backgroundObjects,enemies){
         this.backgroundObjects = backgroundObjects;

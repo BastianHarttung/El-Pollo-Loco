@@ -5,7 +5,7 @@ class Character extends MovableObject{
     y=65 ;
     height=236;
     width=120;
-    speed = 5.5;
+    speed = 5.5;        //Change speed at end 3.5
     world;
     
     IMAGES_WALKING = [
@@ -28,7 +28,7 @@ class Character extends MovableObject{
 
         // Move Pepe on X-Axis
         setInterval(() => {
-            if(this.world.keyboard.RIGHT && this.x < this.xmax){
+            if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x){
                 this.x += this.speed;   
                 this.otherDirection = false; 
             } if(this.world.keyboard.LEFT && this.x > this.xmin){                
