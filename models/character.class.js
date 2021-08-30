@@ -1,7 +1,7 @@
 class Character extends MovableObject{
-    x=50;
-    xmin = -30;
-    xmax = 520;
+    x=100;
+    xmin = 70;
+    xmax = 620;
     y=65 ;
     height=236;
     width=120;
@@ -34,8 +34,9 @@ class Character extends MovableObject{
             } if(this.world.keyboard.LEFT && this.x > this.xmin){                
                 this.x -= this.speed;
                 this.otherDirection = true; 
-            } else {                
-            }
+            } 
+            this.world.camera_x = -this.x;  
+
         }, 1000/this.framerate);
 
         // Change Pics so Pepe is Walking

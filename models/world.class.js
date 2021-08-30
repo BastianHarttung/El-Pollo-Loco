@@ -3,7 +3,7 @@ class World {
     canvas;
     ctx;
     keyboard;
-    camera_x = -100;
+    camera_x = 0;
     backgroundObjects = [        
         new BackgroundObjects('../img/5.Fondo/Capas/5.cielo_1920-1080px.png'),      /* Background */
         new Clouds('../img/5.Fondo/Capas/4.nubes/Completo.png'),                    /* Clouds */
@@ -43,13 +43,13 @@ class World {
         
         this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);  /* Clear canvas */
                       
-        this.ctx.translate(this.camera_x,0);
+        this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.backgroundObjects);   /* Background */        
         this.addObjectsToMap(this.enemies);             /* Enemies */         
         this.addToMap(this.character);                  /* Character */
 
-        this.ctx.translate(-this.camera_x);
+        this.ctx.translate(-this.camera_x, 0);
 
         // Draw() wird immer wieder aufgerufen je nach leistung des pcs
         let self = this;
