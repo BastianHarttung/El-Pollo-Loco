@@ -1,11 +1,11 @@
 class Character extends MovableObject{
     x=100;
-    xmin = 70;
-    xmax = 620;
+    xmin = 1;
+    xmax = 1750;
     y=65 ;
     height=236;
     width=120;
-    speed = 2.5;
+    speed = 5.5;
     world;
     
     IMAGES_WALKING = [

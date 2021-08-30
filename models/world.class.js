@@ -4,20 +4,10 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    backgroundObjects = [        
-        new BackgroundObjects('../img/5.Fondo/Capas/5.cielo_1920-1080px.png'),      /* Background */
-        new Clouds('../img/5.Fondo/Capas/4.nubes/Completo.png'),                    /* Clouds */
-        new BackgroundObjects('../img/5.Fondo/Capas/3.Fondo3/Completo.png'),        /* Hills */
-        new BackgroundObjects('../img/5.Fondo/Capas/2.Fondo2/completo.png'),        /* BG Cacti */
-        new BackgroundObjects('../img/5.Fondo/Capas/1.suelo-fondo1/completo.png'),  /* Ground */        
-    ]
-    enemies = [
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chick(),
-        new Chick()
-        ];
+    width_background = 1187;
+
+    backgroundObjects;
+    enemies;
     character = new Character();
         
     constructor(canvas, keyboard){
