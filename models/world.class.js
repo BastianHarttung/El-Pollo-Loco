@@ -2,6 +2,8 @@ class World {
 
     canvas;
     ctx;
+    keyboard;
+    camera_x = -100;
     backgroundObjects = [        
         new BackgroundObjects('../img/5.Fondo/Capas/5.cielo_1920-1080px.png'),      /* Background */
         new Clouds('../img/5.Fondo/Capas/4.nubes/Completo.png'),                    /* Clouds */
@@ -18,10 +20,19 @@ class World {
         ];
     character = new Character();
         
-    constructor(canvas){
+    constructor(canvas, keyboard){
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
+        this.keyboard = keyboard;
         this.draw();
+        this.setWorld();
+    }
+
+    /**
+     * Übergebe die World Variablen an Character
+     */
+    setWorld(){
+        this.character.world = this;        
     }
 
     /**
@@ -31,11 +42,14 @@ class World {
     draw(){
         
         this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);  /* Clear canvas */
-                
-         
+                      
+        this.ctx.translate(this.camera_x,0);
+
         this.addObjectsToMap(this.backgroundObjects);   /* Background */        
         this.addObjectsToMap(this.enemies);             /* Enemies */         
         this.addToMap(this.character);                  /* Character */
+
+        this.ctx.translate(-this.camera_x);
 
         // Draw() wird immer wieder aufgerufen je nach leistung des pcs
         let self = this;
@@ -50,7 +64,17 @@ class World {
      * @param {*} movableObject 
      */
     addToMap(movableObject){
+        if (movableObject.otherDirection){
+            this.ctx.save();
+            this.ctx.translate(movableObject.width, 0);
+            this.ctx.scale(-1,1);
+            movableObject.x = movableObject.x * -1;
+        }
         this.ctx.drawImage(movableObject.img, movableObject.x, movableObject.y, movableObject.width, movableObject.height);
+        if (movableObject.otherDirection){
+            movableObject.x = movableObject.x * -1;
+            this.ctx.restore();
+        }
     }
     
     /**
@@ -61,28 +85,6 @@ class World {
             this.addToMap(object);
         })   
     }   
-    
-    /**
-     * Move Background left in different layers
-     */
-     moveRight() {
-        world.character.walkingAnimation();  
-        world.character.x += 1;
-        world.backgroundObjects[2].x -= 2;   
-        world.backgroundObjects[3].x -= 3.5;   
-        world.backgroundObjects[4].x -= 5;      
-    }
-
-    /**
-     * Move Background right in different layers
-     */
-    moveLeft() {     
-        world.character.walkingAnimation();
-        world.character.x -= 1;
-        world.backgroundObjects[2].x += 2;   
-        world.backgroundObjects[3].x += 3.5;   
-        world.backgroundObjects[4].x += 5;
-    }
-    
+           
 }
 

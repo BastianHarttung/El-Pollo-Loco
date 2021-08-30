@@ -7,12 +7,15 @@ let keyboard = new Keyboard();
  */
 function init(){
     canvas =document.getElementById('canvas');
-    world = new World(canvas);    
+    world = new World(canvas, keyboard);    
     
    /*  console.log('My Character is ',world.character)
     console.log('My Enemies are: ' ,world.enemies) */
 }
 
+/**
+ * Eventlistener for Keyboard press
+ */
 document.addEventListener('keydown', (event) => { 
     console.log('taste gedrückt', event.code);
 
@@ -24,10 +27,12 @@ document.addEventListener('keydown', (event) => {
         keyboard.LEFT = true;
     } if (event.code == 'Space'){
         keyboard.LEFT = true;
-    }
-    
+    }    
 }, false);
 
+/**
+ * Eventlistener for Keyboard button up * 
+ */
 document.addEventListener('keyup', (event) => { 
     console.log('taste losgelassen', event.code);
 
@@ -39,6 +44,5 @@ document.addEventListener('keyup', (event) => {
         keyboard.LEFT = false;
     } if (event.code == 'Space'){
         keyboard.LEFT = false;
-    }
-    
+    }    
 }, false);

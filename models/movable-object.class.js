@@ -7,6 +7,8 @@ class MovableObject {
     availableImages = {};
     randomNr = 1+ Math.random() *2;
     currentImage = 0;
+    framerate = 60;
+    otherDirection = false;
 
     loadImage(path){
         this.img = new Image();
@@ -32,7 +34,7 @@ class MovableObject {
      walkingEnemies(){
         setInterval(() => {            
             this.x -= this.randomNr            
-        }, 1000/60);
+        }, 1000/this.framerate);
     }    
 
     
