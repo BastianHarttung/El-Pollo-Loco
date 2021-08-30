@@ -1,9 +1,10 @@
 class Level{
     backgroundObjects;
     enemies;
+    widthBackground = 1187;
     
-    constructor(enemies, backgroundObjects){
-        this.enemies = enemies;
+    constructor(backgroundObjects,enemies){
         this.backgroundObjects = backgroundObjects;
+        this.enemies = enemies;        
     }
 }

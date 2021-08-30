@@ -6,8 +6,8 @@ class World {
     camera_x = 0;
     width_background = 1187;
 
-    backgroundObjects;
-    enemies;
+    backgroundObjects = level1.backgroundObjects;
+    enemies = level1.enemies;
     character = new Character();
         
     constructor(canvas, keyboard){
