@@ -16,6 +16,7 @@ class Character extends MovableObject{
         '../img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-25.png',
         '../img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-26.png'            
     ]
+    walking_sound = new Audio('../audio/walking_sand.mp3')
 
     constructor(){
         super().loadImage('../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png')
@@ -31,18 +32,23 @@ class Character extends MovableObject{
             if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x){
                 this.x += this.speed;   
                 this.otherDirection = false; 
+                
             } if(this.world.keyboard.LEFT && this.x > this.xmin){                
                 this.x -= this.speed;
-                this.otherDirection = true; 
-            } 
+                this.otherDirection = true;                 
+            } else {                
+            }
             this.world.camera_x = -this.x;  
 
         }, 1000/this.framerate);
 
         // Change Pics so Pepe is Walking
         setInterval(() => {
-            if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT){                               
+            if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT){ 
+                this.walking_sound.play();                              
                 this.changePicsForWalking();
+            }else {
+                this.walking_sound.pause();
             }
         }, 1000/10);        
     }
