@@ -32,12 +32,9 @@ class MovableObject {
      * 
      */
      walkingEnemies(){
-        setInterval(() => {            
-            this.x -= this.randomNr            
+        setInterval(() => {              
+                this.x -= this.randomNr                                            
         }, 1000/this.framerate);
-    }    
-
-    
-    
-       
+    }       
+           
 }

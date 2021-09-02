@@ -8,7 +8,9 @@ class Chick extends MovableObject{
         '../img/3.Secuencias_Enemy_básico/Versión_pollito/1.Paso_derecho.png',
         '../img/3.Secuencias_Enemy_básico/Versión_pollito/2.Centro.png',
         '../img/3.Secuencias_Enemy_básico/Versión_pollito/3.Paso_izquierdo.png'                  
-    ]
+    ];
+
+    IMAGE_DEATH = '../img/3.Secuencias_Enemy_básico/Versión_pollito/4.Muerte.png';
     
     constructor(){
         super().loadImage('../img/3.Secuencias_Enemy_básico/Versión_pollito/2.Centro.png')

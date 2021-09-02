@@ -4,8 +4,7 @@ class Keyboard {
     UP = false;
     SPACE = false;
 
-    constructor(){
-        
+    constructor(){        
       
     }
 }

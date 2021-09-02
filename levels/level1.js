@@ -17,12 +17,29 @@ const level1 = new Level(
         new Clouds('../img/5.Fondo/Capas/4.nubes/Completo.png', width_background*2)     /* Clouds */              
     ],
     [
-    new Chicken(),
-    new Chicken(),
-    new Chicken(),
-    new Chick(),
-    new Chick(),
-    new Chick(), 
-    new Endboss()   
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chick(),
+        new Chick(),
+        new Chick(), 
+        new Endboss()   
+    ],
+    [
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin(),
+        new Coin()
+    ],
+    [
+        new Tequila(),
+        new Tequila(),
+        new Tequila(),
+        new Tequila(),
+        new Tequila(),
+        new Tequila(),
+        new Tequila()
     ]       
 );
