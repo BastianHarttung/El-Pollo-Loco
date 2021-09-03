@@ -20,5 +20,25 @@ class CollectableObject{
             this.availableImages[path] = img;
         })        
     };    
+
+    /**
+     * Gravity to the Objects
+     */
+     applyGravity(){
+        setInterval(() => {
+            if (this.isAboveGround()) {
+                this.y += this.speedY;
+                this.speedY += this.acceleration;
+            }           
+        }, 1000/this.framerate);
+    }
+
+    /**
+     * Checks if the Object is above Ground
+     * @returns Y-Koordinate vom Objekt über Y Koordinate von Ground
+     */
+    isAboveGround() {
+        return this.y < this.groundY;
+    }
     
 }

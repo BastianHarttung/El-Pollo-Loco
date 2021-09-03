@@ -1,4 +1,4 @@
-class Coin extends CollectableObject {
+class Coin extends MovableObject {
     height = 100;
     width = 100;
 
@@ -16,6 +16,9 @@ class Coin extends CollectableObject {
         this.animate();
     }
 
+    /**
+     * The Coins are blinking
+     */
     animate(){
         setInterval(() => {
             let index = this.currentImage % this.IMAGES_ANIMATE.length; //Modulo Rest von länge des array

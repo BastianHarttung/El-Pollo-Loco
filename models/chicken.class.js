@@ -23,6 +23,9 @@ class Chicken extends MovableObject{
         this.animate();
     }
 
+    /**
+     * The Chicken looks like they are walking with different Pics
+     */
     animate(){
         setInterval(() => {
             let index = this.currentImage % this.IMAGES_WALKING.length; //Modulo Rest von länge des array

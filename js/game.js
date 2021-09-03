@@ -24,9 +24,9 @@ document.addEventListener('keydown', (event) => {
     } if (event.code == 'ArrowLeft'){
         keyboard.LEFT = true;
     } if (event.code == 'ArrowUp'){
-        keyboard.LEFT = true;
+        keyboard.UP = true;
     } if (event.code == 'Space'){
-        keyboard.LEFT = true;
+        keyboard.SPACE = true;
     }    
 }, false);
 
@@ -41,8 +41,8 @@ document.addEventListener('keyup', (event) => {
     } if (event.code == 'ArrowLeft'){
         keyboard.LEFT = false;
     } if (event.code == 'ArrowUp'){
-        keyboard.LEFT = false;
+        keyboard.UP = false;
     } if (event.code == 'Space'){
-        keyboard.LEFT = false;
+        keyboard.SPACE = false;
     }    
 }, false);
