@@ -69,12 +69,16 @@ class Character extends MovableObject {
     ];
 
     SOUND_walking = new Audio('../audio/walking_sand.mp3');
-    SOUND_jump = new Audio('./audio/jump_hop.mp3')
+    SOUND_jump = new Audio('./audio/jump_hop.mp3');
+    SOUND_death = new Audio('./audio/pepe_death.mp3');
 
     constructor() {
         super().loadImage('../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png')
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMP);
+        this.loadImages(this.IMAGES_DEATH);
+        this.loadImages(this.IMAGES_SLEEP);
+        this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
         this.animate();
     }
@@ -85,10 +89,10 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
-            }             
+            }
             if (this.world.keyboard.LEFT && this.x > this.xmin) {
                 this.moveLeft();
-            }                        
+            }
             if (this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
             }
@@ -98,18 +102,23 @@ class Character extends MovableObject {
 
         // Change Pics 
         setInterval(() => {
-            if (this.isAboveGround()) {
-                this.SOUND_jump.play();
-                this.playAnimation(this.IMAGES_JUMP);   // Pepe Jumping animation
+            if (this.isDead) {
+                this.playAnimation(this.IMAGES_DEATH);
+                this.SOUND_death.play();
             } else {
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.SOUND_walking.play();
-                    this.playAnimation(this.IMAGES_WALKING);    // Pepe Walking animation
+                if (this.isAboveGround()) {
+                    this.SOUND_jump.play();
+                    this.playAnimation(this.IMAGES_JUMP);   // Pepe Jumping animation
                 } else {
-                    this.SOUND_walking.pause();
+                    if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                        this.SOUND_walking.play();
+                        this.playAnimation(this.IMAGES_WALKING);    // Pepe Walking animation
+                    } else {
+                        this.SOUND_walking.pause();
+                    }
+                    this.SOUND_jump.pause();
+                    this.SOUND_jump.currentTime = 0;
                 }
-                this.SOUND_jump.pause();
-                this.SOUND_jump.currentTime = 0;
             }
         }, 1000 / 10);
 

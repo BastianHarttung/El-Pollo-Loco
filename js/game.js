@@ -17,7 +17,7 @@ function init(){
  * Eventlistener for Keyboard press
  */
 document.addEventListener('keydown', (event) => { 
-    console.log('taste gedrückt', event.code);
+    //console.log('taste gedrückt', event.code);
 
     if (event.code == 'ArrowRight') {
         keyboard.RIGHT = true;
@@ -34,7 +34,7 @@ document.addEventListener('keydown', (event) => {
  * Eventlistener for Keyboard button up * 
  */
 document.addEventListener('keyup', (event) => { 
-    console.log('taste losgelassen', event.code);
+    //console.log('taste losgelassen', event.code);
 
     if (event.code == 'ArrowRight') {
         keyboard.RIGHT = false;
