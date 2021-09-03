@@ -24,10 +24,7 @@ class Chick extends MovableObject{
 
     animate(){
         setInterval(() => {
-            let index = this.currentImage % this.IMAGES_WALKING.length; //Modulo Rest von länge des array
-            let path = this.IMAGES_WALKING[index];
-            this.img = this.availableImages[path];
-            this.currentImage++;
+            this.playAnimation(this.IMAGES_WALKING);
         }, 150);
     }
     

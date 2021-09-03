@@ -2,8 +2,8 @@ class Character extends MovableObject {
     x = 100;
     xmin = 1;
     xmax = 1750;
-    y = 0;           //65
-    groundY = 65;   // Boden Y Koordinate
+    y = 63;           //65
+    groundY = 63;   // Boden Y Koordinate
     height = 236;
     width = 120;
     speed = 3.5;    //Change speed at end 3.5
@@ -68,7 +68,8 @@ class Character extends MovableObject {
         '../img/2.Secuencias_Personaje-Pepe-corrección/5.Muerte/D-56.png'
     ];
 
-    SOUND_walking = new Audio('../audio/walking_sand.mp3')
+    SOUND_walking = new Audio('../audio/walking_sand.mp3');
+    SOUND_jump = new Audio('./audio/jump_hop.mp3')
 
     constructor() {
         super().loadImage('../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png')
@@ -83,18 +84,13 @@ class Character extends MovableObject {
         // Move Pepe on X-Axis
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.x += this.speed;
-                this.otherDirection = false;
-
-            } 
-            
+                this.moveRight();
+            }             
             if (this.world.keyboard.LEFT && this.x > this.xmin) {
-                this.x -= this.speed;
-                this.otherDirection = true;
-            } 
-                       
-            if (this.world.keyboard.UP) {
-                this.speedY = 20;
+                this.moveLeft();
+            }                        
+            if (this.world.keyboard.UP && !this.isAboveGround()) {
+                this.jump();
             }
             this.world.camera_x = -this.x;
 
@@ -103,6 +99,7 @@ class Character extends MovableObject {
         // Change Pics 
         setInterval(() => {
             if (this.isAboveGround()) {
+                this.SOUND_jump.play();
                 this.playAnimation(this.IMAGES_JUMP);   // Pepe Jumping animation
             } else {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -111,13 +108,11 @@ class Character extends MovableObject {
                 } else {
                     this.SOUND_walking.pause();
                 }
+                this.SOUND_jump.pause();
+                this.SOUND_jump.currentTime = 0;
             }
         }, 1000 / 10);
 
     }
 
-
-    jump() {
-
-    }
 }

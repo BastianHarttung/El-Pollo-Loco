@@ -12,7 +12,7 @@ class MovableObject {
     levelLength = 2000;
 
     speedY = 0;             // For Gravity
-    acceleration = 3;     // For Gravity    
+    acceleration = 1;     // For Gravity    
 
     /**
      * Load Image on Constructor
@@ -74,5 +74,19 @@ class MovableObject {
      */
     isAboveGround() {
         return this.y < this.groundY;
-    }       
+    }      
+    
+    moveRight(){
+        this.x += this.speed;
+        this.otherDirection = false;           
+    }
+
+    moveLeft(){
+        this.x -= this.speed;
+        this.otherDirection = true;
+    }
+    
+    jump(){
+        this.speedY = 18;
+    }
 }
