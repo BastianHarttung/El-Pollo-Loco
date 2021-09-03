@@ -4,7 +4,9 @@ class CollectableObject{
     width;
     height;
     img;
+    levelLength = 2000;
     availableImages = {};
+    currentImage = 0;
 
     loadImage(path){
         this.img = new Image();

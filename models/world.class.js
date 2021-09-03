@@ -37,9 +37,9 @@ class World {
 
         this.addObjectsToMap(this.level.backgroundObjects);     /* Background */ 
         this.addObjectsToMap(this.level.clouds);                //Clouds       
-        this.addObjectsToMap(this.level.enemies);               /* Enemies */
         this.addObjectsToMap(this.level.coins);                 // Coins
         this.addObjectsToMap(this.level.tequilas);              // Tequilas
+        this.addObjectsToMap(this.level.enemies);               /* Enemies */       
         
         this.addToMap(this.character);                          /* Character */
 
