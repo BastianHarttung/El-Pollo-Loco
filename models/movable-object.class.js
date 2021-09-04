@@ -17,6 +17,8 @@ class MovableObject {
     energy = 100;
     isDead = false;
 
+    lastHit = 0;
+
     /**
      * Load Image on Constructor
      * @param {string} path 
@@ -132,8 +134,21 @@ class MovableObject {
             this.y < movableObject.y + movableObject.height
     }
 
+    /**
+     * If Pepe is hit by chicken he lost energy
+     */
     hit() {
         this.energy -= 10;
+        this.lastHit = new Date().getTime();
+    }
+
+    /**
+     * If Pepe is hit longer timepassed 1s return true
+     * @returns true If Time since last Hit < 1s
+     */
+    isHurt() {
+        let timePassed = new Date().getTime() - this.lastHit;   // Difference in ms
+        return timePassed < 1000;      // Wenn Zeit seit letztem Hit länger als 1000 ms dann wird true ausgegeben
     }
 
     checkIfDead() {
