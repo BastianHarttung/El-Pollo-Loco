@@ -8,6 +8,9 @@ class World {
 
     level = level1;
 
+    statusBar_Life = new Statusbar_Life();
+    statusBar_Tequila = new Statusbar_Tequila();
+
     character = new Character();
 
     constructor(canvas, keyboard) {
@@ -24,6 +27,7 @@ class World {
      */
     setWorld() {
         this.character.world = this;
+        this.statusBar_Tequila.world = this;
     }
 
     /**
@@ -33,9 +37,12 @@ class World {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy) && this.character.energy > 0) {
-                    this.character.hit();
+                    this.character.hit();       //lost energy                    
+                    this.statusBar_Life.setPercentage(this.character.energy);
+                    
                     console.log('Getroffen von: ', enemy);
                     console.log('Energy: ', this.character.energy);
+
                     this.character.checkIfDead();
                 };
             })
@@ -44,24 +51,34 @@ class World {
 
     /**
      * Draw function for drawing the world
+     * Wird immer wieder aufgerufen
      * 
      */
     draw() {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  /* Clear canvas */
+ 
+        
+ 
+        this.ctx.translate(this.camera_x, 0);   
+        this.addObjectsToMap(this.level.backgroundObjects);     /* Background */
+        this.ctx.translate(-this.camera_x, 0);
+
+        //-----------Space for fixed Objects -----------------
+        this.addObjectsToMap(this.level.clouds);                //Clouds
+        this.addToMap(this.statusBar_Life);                     // Health Bar
+        this.addToMap(this.statusBar_Tequila);
+        this.addCounterToMap(this.statusBar_Tequila.tequila_counter);    
+        
 
         this.ctx.translate(this.camera_x, 0);
-
-        this.addObjectsToMap(this.level.backgroundObjects);     /* Background */
-        this.addObjectsToMap(this.level.clouds);                //Clouds       
         this.addObjectsToMap(this.level.coins);                 // Coins
         this.addObjectsToMap(this.level.tequilas);              // Tequilas
         this.addObjectsToMap(this.level.enemies);               /* Enemies */
-
-        this.addToMap(this.character);                          /* Character */
-
+        this.addToMap(this.character);                          /* Character */   
+                 
         this.ctx.translate(-this.camera_x, 0);
-
+        
         // Draw() wird immer wieder aufgerufen je nach leistung des pcs
         let self = this;
         requestAnimationFrame(function () {
@@ -95,6 +112,15 @@ class World {
         objectArray.forEach(object => {
             this.addToMap(object);
         })
+    }
+    /**
+     * Counter Number to Status
+     */
+    addCounterToMap(tequila_counter){
+            this.ctx.font = "35px boogalooregular";
+            this.ctx.fillStyle = "white";
+            this.ctx.textAlign = "center";
+            this.ctx.fillText(tequila_counter ,205,323); 
     }
 
     /**

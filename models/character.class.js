@@ -1,7 +1,8 @@
 class Character extends MovableObject {
+   
     x = 100;
     xmin = 1;
-    xmax = 1750;
+   /*  xmax = 600; */
     y = 63;           //65
     groundY = 63;   // Boden Y Koordinate
     height = 236;
@@ -29,16 +30,16 @@ class Character extends MovableObject {
         '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-8.png',
         '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-9.png',
         '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-10.png',
-        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-11.png',
-        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-12.png',
-        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-13.png',
-        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-14.png',
-        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-15.png',
-        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-16.png',
-        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-17.png',
-        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-18.png',
-        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-19.png',
-        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-20.png'
+        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-11.png',
+        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-12.png',
+        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-13.png',
+        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-14.png',
+        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-15.png',
+        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-16.png',
+        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-17.png',
+        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-18.png',
+        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-19.png',
+        '../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-20.png'        
     ];
 
     IMAGES_JUMP = [
@@ -72,12 +73,12 @@ class Character extends MovableObject {
     SOUND_jump = new Audio('./audio/jump_hop.mp3');
     SOUND_death = new Audio('./audio/pepe_death.mp3');
     SOUND_sleep = new Audio('./audio/pepe_sleep.mp3');
-    SOUND_hurt = new Audio('./audio/pepe_hurt.mp3');
+    SOUND_hurt = new Audio('./audio/pepe_hurt.wav');
 
     pepeIsDead = false;
 
     constructor() {
-        super().loadImage('../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png')
+        super().loadImage('../img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMP);
         this.loadImages(this.IMAGES_DEATH);
