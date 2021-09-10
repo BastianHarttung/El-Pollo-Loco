@@ -3,14 +3,14 @@ class Coin extends MovableObject {
     width = 100;
 
     IMAGES_ANIMATE = [
-        '../img/8.Coin/Moneda1.png',
-        '../img/8.Coin/Moneda2.png'
+        './img/8.Coin/Moneda1.png',
+        './img/8.Coin/Moneda2.png'
     ]
 
-    constructor() {
-        super().loadImage('../img/8.Coin/Moneda1.png');
+    constructor(x) {
+        super().loadImage('./img/8.Coin/Moneda1.png');
         this.loadImages(this.IMAGES_ANIMATE);
-        this.x = 400 + Math.random() * this.levelLength;
+        this.x = x + Math.random() * 50; /* 400 + Math.random() * this.levelLength */;
         this.y = Math.random() * 160;  
         
         this.animate();

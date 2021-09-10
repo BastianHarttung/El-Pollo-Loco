@@ -13,6 +13,7 @@
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/status-bar-life.class.js"></script>
     <script src="./models/status-bar-tequila.class.js"></script>
+    <script src="./models/status-bar-coins.class.js"></script>
     
     <script src="./models/movable-object.class.js"></script>
     <script src="./models/character.class.js"></script>
@@ -20,7 +21,7 @@
     <script src="./models/chick.class.js"></script>
     <script src="./models/endboss.class.js"></script> 
 
-    <script src="./models/collectable-objects.class.js"></script>
+    <script src="./models/throwable-objects.class.js"></script>
     <script src="./models/coin.class.js"></script>
     <script src="./models/tequila.class.js"></script>
 
@@ -29,18 +30,23 @@
     
     <script src="./models/level.class.js"></script>
     <script src="./levels/level1.js"></script>
-  <script src="./models/world.class.js"></script>
+    <script src="./models/world.class.js"></script>
     <script src="./js/keyboard.class.js"></script>    
     <script src="./js/game.js"></script>
 
 </head>
-<body onload="init()">
+<body>
 
     
     <div class="background-container d-flex-center">
 
+        
         <!-- <h1>El Pollo Loco</h1> -->
         <div class="border-canvas d-flex-center">
+            <div id="start-screen" class="start-screen">
+                <img src="./img/9.Intro _ Outro Image/Start Screen/Opción2.png">
+                <button class="start-btn" onclick="start()">Start</button>
+            </div>
             <canvas id="canvas" width="607px" height="334px"></canvas>
         </div>
         

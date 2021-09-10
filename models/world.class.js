@@ -10,6 +10,7 @@ class World {
 
     statusBar_Life = new Statusbar_Life();
     statusBar_Tequila = new Statusbar_Tequila();
+    statusBar_Coins = new Statusbar_Coins();
 
     character = new Character();
 
@@ -31,22 +32,60 @@ class World {
     }
 
     /**
-     * Check collisions
+     * Check collisions from Character with things
      */
     checkCollisions() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy) && this.character.energy > 0) {
-                    this.character.hit();       //lost energy                    
-                    this.statusBar_Life.setPercentage(this.character.energy);
-                    
-                    console.log('Getroffen von: ', enemy);
-                    console.log('Energy: ', this.character.energy);
-
-                    this.character.checkIfDead();
-                };
-            })
+            this.checkCollisionWithEnemies();
         }, 200);
+
+        setInterval(() => {
+            this.checkCollisionWithCoins();
+            this.checkCollisionWithTequila();
+        }, 1000 / 60);
+    }
+
+    /**
+     * Check Collision from Character with Chicken
+     */
+    checkCollisionWithEnemies() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && this.character.energy > 0) {
+                this.character.hit();       //lost energy                    
+                this.statusBar_Life.setPercentage(this.character.energy);
+
+                console.log('Getroffen von: ', enemy);
+                console.log('Energy: ', this.character.energy);
+
+                this.character.checkIfDead();
+            };
+        })
+    }
+
+    /**
+     * Check Collision from Character to collect Coins
+     */
+    checkCollisionWithCoins() {
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                this.statusBar_Coins.coins_counter++;
+                const indexCoin = this.level.coins.indexOf(coin);
+                this.level.coins.splice(indexCoin, 1)
+            }
+        })
+    }
+
+    /**
+     * Check Collision from Character to collect Tequila
+     */
+    checkCollisionWithTequila() {
+        this.level.tequilas.forEach((tequila) => {
+            if (this.character.isColliding(tequila)) {
+                this.statusBar_Tequila.tequila_counter++;
+                const indexTequila = this.level.tequilas.indexOf(tequila);
+                this.level.tequilas.splice(indexTequila, 1)
+            }
+        })
     }
 
     /**
@@ -57,34 +96,32 @@ class World {
     draw() {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  /* Clear canvas */
- 
-        
- 
-        this.ctx.translate(this.camera_x, 0);   
+
+        this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);     /* Background */
         this.ctx.translate(-this.camera_x, 0);
 
         //-----------Space for fixed Objects -----------------
         this.addObjectsToMap(this.level.clouds);                //Clouds
-        this.addToMap(this.statusBar_Life);                     // Health Bar
-        this.addToMap(this.statusBar_Tequila);
-        this.addCounterToMap(this.statusBar_Tequila.tequila_counter);    
-        
 
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.coins);                 // Coins
         this.addObjectsToMap(this.level.tequilas);              // Tequilas
         this.addObjectsToMap(this.level.enemies);               /* Enemies */
-        this.addToMap(this.character);                          /* Character */   
-                 
+        this.addToMap(this.character);                          /* Character */
         this.ctx.translate(-this.camera_x, 0);
-        
+
+        this.addToMap(this.statusBar_Life);                     // Health Bar
+        this.addToMap(this.statusBar_Tequila);                              // Status Tequila
+        this.addCounterToMap(this.statusBar_Tequila.tequila_counter, 210);   //  Status Tequila Count
+        this.addToMap(this.statusBar_Coins);                                // Status Coins
+        this.addCounterToMap(this.statusBar_Coins.coins_counter, 292);       // Status Coins Count
+
         // Draw() wird immer wieder aufgerufen je nach leistung des pcs
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
         });
-
     }
 
     /**
@@ -116,11 +153,11 @@ class World {
     /**
      * Counter Number to Status
      */
-    addCounterToMap(tequila_counter){
-            this.ctx.font = "35px boogalooregular";
-            this.ctx.fillStyle = "white";
-            this.ctx.textAlign = "center";
-            this.ctx.fillText(tequila_counter ,205,323); 
+    addCounterToMap(counter, x) {
+        this.ctx.font = "35px boogalooregular";
+        this.ctx.fillStyle = "white";
+        this.ctx.textAlign = "center";
+        this.ctx.fillText(counter, x, 323);
     }
 
     /**

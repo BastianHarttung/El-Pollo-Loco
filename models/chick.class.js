@@ -5,17 +5,17 @@ class Chick extends MovableObject{
     width=79;
 
     IMAGES_WALKING = [
-        '../img/3.Secuencias_Enemy_básico/Versión_pollito/1.Paso_derecho.png',
-        '../img/3.Secuencias_Enemy_básico/Versión_pollito/2.Centro.png',
-        '../img/3.Secuencias_Enemy_básico/Versión_pollito/3.Paso_izquierdo.png'                  
+        './img/3.Secuencias_Enemy_básico/Versión_pollito/1.Paso_derecho.png',
+        './img/3.Secuencias_Enemy_básico/Versión_pollito/2.Centro.png',
+        './img/3.Secuencias_Enemy_básico/Versión_pollito/3.Paso_izquierdo.png'                  
     ];
 
-    IMAGE_DEATH = '../img/3.Secuencias_Enemy_básico/Versión_pollito/4.Muerte.png';
+    IMAGE_DEATH = './img/3.Secuencias_Enemy_básico/Versión_pollito/4.Muerte.png';
     
-    constructor(){
-        super().loadImage('../img/3.Secuencias_Enemy_básico/Versión_pollito/2.Centro.png')
+    constructor(x){
+        super().loadImage('./img/3.Secuencias_Enemy_básico/Versión_pollito/2.Centro.png')
         this.loadImages(this.IMAGES_WALKING);
-        this.x= 500 + Math.random() * 500;  // Zahl zwishen 500 und 1000
+        this.x= x + Math.random() * 100;
         
         this.walkingEnemies();
 

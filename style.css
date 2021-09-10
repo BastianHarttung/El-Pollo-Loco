@@ -1,39 +1,72 @@
 @font-face {
     font-family: 'boogalooregular';
-    src: url('./font/boogaloo-regular-webfont.woff2') format('woff2'),
-         url('./font/boogaloo-regular-webfont.woff') format('woff');
+    src: url('./font/boogaloo-regular-webfont.woff2') format('woff2'), url('./font/boogaloo-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
 
-body{
+body {
     margin: 0;
     padding: 0;
-    height: 100vh;    
+    height: 100vh;
 }
 
-.d-flex-center{
+.d-none {
+    display: none !important;
+}
+
+.d-flex-center {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.background-container{
+.background-container {
     background-image: url('./img/bg-window.png');
     background-size: cover;
     background-position: center;
     width: 100vw;
-    height: 100vh;    
+    height: 100vh;
 }
 
-.border-canvas{
+.border-canvas {
     background: linear-gradient(180deg, rgb(0, 95, 133) 0%, rgb(104, 17, 0) 100%);
     width: 667px;
     height: 375px;
+    position: relative;
 }
 
-canvas{
+.start-screen {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.start-screen img {
+    width: 650px;
+    height: 366px;
+}
+
+.start-btn {
+    background: linear-gradient(180deg, rgba(255, 169, 0, 1) 0%, rgba(255, 222, 1, 1) 50%, rgba(255, 169, 0, 1) 100%);
     font-family: 'boogalooregular', Arial, Helvetica, sans-serif;
-    background-color: black;    
+    font-size: 30px;
+    position: absolute;
+    left: 288px;
+    bottom: -60px;
+    border: 0px;
+    box-shadow: 0px 0px 10px #4e0c00;
+    padding: 5px 20px;
+    transition: background 200ms ease-in-out;
+    cursor: pointer;
+}
+
+.start-btn:hover {
+    background: linear-gradient(180deg, rgba(8, 158, 200, 1) 0%, rgba(163, 208, 225, 1) 50%, rgba(8, 158, 200, 1) 100%);
+}
+
+canvas {
+    font-family: 'boogalooregular', Arial, Helvetica, sans-serif;
+    background-color: black;
 }

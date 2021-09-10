@@ -1,12 +1,12 @@
 class Statusbar_Life extends DrawableObject {
 
     IMAGES_LIFE = [
-        '../img/7.Marcadores/Barra/Marcador vida/Naranja/100_ .png',
-        '../img/7.Marcadores/Barra/Marcador vida/Naranja/80_ .png',
-        '../img/7.Marcadores/Barra/Marcador vida/Naranja/60_ .png',
-        '../img/7.Marcadores/Barra/Marcador vida/Naranja/40_ .png',
-        '../img/7.Marcadores/Barra/Marcador vida/Naranja/20__1.png',
-        '../img/7.Marcadores/Barra/Marcador vida/Naranja/0_ .png'
+        './img/7.Marcadores/Barra/Marcador vida/Naranja/100_ .png',
+        './img/7.Marcadores/Barra/Marcador vida/Naranja/80_ .png',
+        './img/7.Marcadores/Barra/Marcador vida/Naranja/60_ .png',
+        './img/7.Marcadores/Barra/Marcador vida/Naranja/40_ .png',
+        './img/7.Marcadores/Barra/Marcador vida/Naranja/20__1.png',
+        './img/7.Marcadores/Barra/Marcador vida/Naranja/0_ .png'
     ];
 
     percentage = 100;

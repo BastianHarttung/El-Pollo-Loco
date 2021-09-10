@@ -4,7 +4,7 @@ class MovableObject extends DrawableObject {
     
     framerate = 60;
     otherDirection = false;
-    levelLength = 2000;
+    /* levelLength = 3000; */
 
     speedY = 0;             // For Gravity
     acceleration = 1;     // For Gravity    

@@ -5,7 +5,8 @@ let keyboard = new Keyboard();
 /**
  * Define canvas and World on start
  */
-function init(){
+function start(){
+    document.getElementById('start-screen').classList.add('d-none');
     canvas =document.getElementById('canvas');
     world = new World(canvas, keyboard);    
     
