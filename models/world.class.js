@@ -16,6 +16,7 @@ class World {
 
     SOUND_coinsPickup = new Audio('./audio/money_pickup.mp3');
     SOUND_bottlePickup = new Audio('./audio/bottle_pickup.mp3');
+    SOUND_chicken = new Audio('./audio/chicken.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -69,6 +70,10 @@ class World {
         requestAnimationFrame(function () {
             self.draw();
         });
+    }
+
+    stopDrawing() {
+        console.log('stop drawing')
     }
 
     /**
@@ -129,7 +134,8 @@ class World {
     checkCollisionWithEnemies() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.character.energy > 0) {
-                this.character.hit();       //lost energy                    
+                this.character.hit();       //lost energy   
+                this.soundPlay(this.SOUND_chicken, 1);                 
                 this.statusBar_Life.setPercentage(this.character.energy);
 
                 console.log('Getroffen von: ', enemy);
@@ -147,7 +153,7 @@ class World {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 this.statusBar_Coins.coins_counter++;
-                this.soundPlay(this.SOUND_coinsPickup);
+                this.soundPlay(this.SOUND_coinsPickup, 0.4);
                 const indexCoin = this.level.coins.indexOf(coin);
                 this.level.coins.splice(indexCoin, 1)
             }
@@ -161,7 +167,7 @@ class World {
         this.level.tequilas.forEach((tequila) => {
             if (this.character.isColliding(tequila)) {
                 this.statusBar_Tequila.tequila_counter++;
-                this.soundPlay(this.SOUND_bottlePickup);
+                this.soundPlay(this.SOUND_bottlePickup, 0.4);
                 const indexTequila = this.level.tequilas.indexOf(tequila);
                 this.level.tequilas.splice(indexTequila, 1)
             }
@@ -170,10 +176,10 @@ class World {
 
     /**
      * Play sound at Pickup
-     * @param {sound new Audio} sound 
+     * @param {sound new Audio, audio volume} sound 
      */
-    soundPlay(sound) {
-        sound.volume = 0.4;
+    soundPlay(sound,volume) {
+        sound.volume = volume;
         sound.currentTime = 0;
         sound.play();
     }
@@ -198,6 +204,6 @@ class World {
         movableObject.x = movableObject.x * -1;
         this.ctx.restore();
     }
-    
+
 }
 

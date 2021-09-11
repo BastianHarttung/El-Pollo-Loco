@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let showControl = false;
 
 /**
  * Define canvas and World on start
@@ -12,6 +13,16 @@ function start(){
     
    /*  console.log('My Character is ',world.character)
     console.log('My Enemies are: ' ,world.enemies) */
+}
+
+function showControls() {
+    if (showControl == false) {
+        document.getElementById('controls-container').classList.remove('d-none');
+        showControl = true;
+    } else {
+        document.getElementById('controls-container').classList.add('d-none');
+        showControl = false;
+    }    
 }
 
 /**

@@ -121,7 +121,7 @@ class Character extends MovableObject {
             this.pepeIsDead = true;
             setTimeout(() => {                                
                 document.getElementById('end-screen').classList.remove('d-none');
-            }, 1200);
+            }, 500);
         } else if (this.isAboveGround()) {
             this.SOUND_jump.play();
             this.playAnimation(this.IMAGES_JUMP);   // Pepe Jumping animation
