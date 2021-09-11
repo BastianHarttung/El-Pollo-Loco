@@ -116,10 +116,12 @@ class Character extends MovableObject {
             this.SOUND_hurt.play();
         } else if (this.isDead && this.pepeIsDead == false) {
             this.playAnimation(this.IMAGES_DEATH);
-            this.speedY = -10;
+            /* this.speedY = -10; */
             this.SOUND_death.play();
             this.pepeIsDead = true;
-            world.draw(false)
+            setTimeout(() => {                                
+                document.getElementById('end-screen').classList.remove('d-none');
+            }, 1200);
         } else if (this.isAboveGround()) {
             this.SOUND_jump.play();
             this.playAnimation(this.IMAGES_JUMP);   // Pepe Jumping animation

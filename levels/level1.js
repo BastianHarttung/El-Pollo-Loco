@@ -23,33 +23,34 @@ const level1 = new Level(
         new Clouds('./img/5.Fondo/Capas/4.nubes/Completo.png', width_background * 4)   /* Clouds */
     ],
     [
-        new Chicken(500),
-        new Chicken(900),
+        new Chick(500),
+        new Chicken(800),
         new Chicken(1300),
-        new Chick(400),
-        new Chick(1000),
-        new Chick(1400),
+        new Chick(1600),
+        new Chicken(2000),
+        new Chick(2300),
+        new Chicken(2600),
         new Endboss()
     ],
     [
         new Coin(400),
-        new Coin(600),
-        new Coin(800),
+        new Coin(700),
         new Coin(1000),
-        new Coin(1100),
-        new Coin(1200),
-        new Coin(1400),
-        new Coin(1600),
-        new Coin(1800),
-        new Coin(2000)          //10
+        new Coin(1300),
+        new Coin(1500),
+        new Coin(1700),
+        new Coin(2000),
+        new Coin(2300),
+        new Coin(2500),
+        new Coin(2800)          //10
     ],
     [
         new Tequila(400),
-        new Tequila(600),
         new Tequila(800),
         new Tequila(1000),
-        new Tequila(1200),
-        new Tequila(1400),
-        new Tequila(1600)       //7
+        new Tequila(1300),
+        new Tequila(1700),
+        new Tequila(2100),
+        new Tequila(2600)       //7
     ]
 );

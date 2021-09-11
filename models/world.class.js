@@ -14,6 +14,9 @@ class World {
 
     character = new Character();
 
+    SOUND_coinsPickup = new Audio('./audio/money_pickup.mp3');
+    SOUND_bottlePickup = new Audio('./audio/bottle_pickup.mp3');
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -24,68 +27,11 @@ class World {
     }
 
     /**
-     * Übergebe die World Variablen an Character
+     * Give the World Variables to classes
      */
     setWorld() {
         this.character.world = this;
         this.statusBar_Tequila.world = this;
-    }
-
-    /**
-     * Check collisions from Character with things
-     */
-    checkCollisions() {
-        setInterval(() => {
-            this.checkCollisionWithEnemies();
-        }, 200);
-
-        setInterval(() => {
-            this.checkCollisionWithCoins();
-            this.checkCollisionWithTequila();
-        }, 1000 / 60);
-    }
-
-    /**
-     * Check Collision from Character with Chicken
-     */
-    checkCollisionWithEnemies() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.energy > 0) {
-                this.character.hit();       //lost energy                    
-                this.statusBar_Life.setPercentage(this.character.energy);
-
-                console.log('Getroffen von: ', enemy);
-                console.log('Energy: ', this.character.energy);
-
-                this.character.checkIfDead();
-            };
-        })
-    }
-
-    /**
-     * Check Collision from Character to collect Coins
-     */
-    checkCollisionWithCoins() {
-        this.level.coins.forEach((coin) => {
-            if (this.character.isColliding(coin)) {
-                this.statusBar_Coins.coins_counter++;
-                const indexCoin = this.level.coins.indexOf(coin);
-                this.level.coins.splice(indexCoin, 1)
-            }
-        })
-    }
-
-    /**
-     * Check Collision from Character to collect Tequila
-     */
-    checkCollisionWithTequila() {
-        this.level.tequilas.forEach((tequila) => {
-            if (this.character.isColliding(tequila)) {
-                this.statusBar_Tequila.tequila_counter++;
-                const indexTequila = this.level.tequilas.indexOf(tequila);
-                this.level.tequilas.splice(indexTequila, 1)
-            }
-        })
     }
 
     /**
@@ -111,6 +57,7 @@ class World {
         this.addToMap(this.character);                          /* Character */
         this.ctx.translate(-this.camera_x, 0);
 
+        //-----------Space for fixed Objects -----------------
         this.addToMap(this.statusBar_Life);                     // Health Bar
         this.addToMap(this.statusBar_Tequila);                              // Status Tequila
         this.addCounterToMap(this.statusBar_Tequila.tequila_counter, 210);   //  Status Tequila Count
@@ -160,6 +107,78 @@ class World {
         this.ctx.fillText(counter, x, 323);
     }
 
+    /*-----------------------Collisions---------------------------------*/
+
+    /**
+    * Check collisions from Character with things
+    */
+    checkCollisions() {
+        setInterval(() => {
+            this.checkCollisionWithEnemies();
+        }, 200);
+
+        setInterval(() => {
+            this.checkCollisionWithCoins();
+            this.checkCollisionWithTequila();
+        }, 1000 / 60);
+    }
+
+    /**
+     * Check Collision from Character with Chicken
+     */
+    checkCollisionWithEnemies() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && this.character.energy > 0) {
+                this.character.hit();       //lost energy                    
+                this.statusBar_Life.setPercentage(this.character.energy);
+
+                console.log('Getroffen von: ', enemy);
+                console.log('Energy: ', this.character.energy);
+
+                this.character.checkIfDead();
+            };
+        })
+    }
+
+    /**
+     * Check Collision from Character to collect Coins
+     */
+    checkCollisionWithCoins() {
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                this.statusBar_Coins.coins_counter++;
+                this.soundPlay(this.SOUND_coinsPickup);
+                const indexCoin = this.level.coins.indexOf(coin);
+                this.level.coins.splice(indexCoin, 1)
+            }
+        })
+    }
+
+    /**
+     * Check Collision from Character to collect Tequila
+     */
+    checkCollisionWithTequila() {
+        this.level.tequilas.forEach((tequila) => {
+            if (this.character.isColliding(tequila)) {
+                this.statusBar_Tequila.tequila_counter++;
+                this.soundPlay(this.SOUND_bottlePickup);
+                const indexTequila = this.level.tequilas.indexOf(tequila);
+                this.level.tequilas.splice(indexTequila, 1)
+            }
+        })
+    }
+
+    /**
+     * Play sound at Pickup
+     * @param {sound new Audio} sound 
+     */
+    soundPlay(sound) {
+        sound.volume = 0.4;
+        sound.currentTime = 0;
+        sound.play();
+    }
+
+    /*-----------------------------Images Flip------------------------------*/
     /**
      * Flip Image horizontally
      * @param {json} movableObject 
@@ -179,6 +198,6 @@ class World {
         movableObject.x = movableObject.x * -1;
         this.ctx.restore();
     }
-
+    
 }
 
