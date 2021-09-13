@@ -1,8 +1,8 @@
 class Character extends MovableObject {
-   
+
     x = 100;
     xmin = 1;
-   /*  xmax = 600; */
+    /*  xmax = 600; */
     y = 63;           //65
     groundY = 63;   // Boden Y Koordinate
     height = 236;
@@ -19,7 +19,7 @@ class Character extends MovableObject {
         './img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-26.png'
     ];
 
-    IMAGES_SLEEP = [
+    IMAGES_STAND = [
         './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png',
         './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-2.png',
         './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-3.png',
@@ -29,7 +29,10 @@ class Character extends MovableObject {
         './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-7.png',
         './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-8.png',
         './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-9.png',
-        './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-10.png',
+        './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-10.png'
+    ];
+
+    IMAGES_SLEEP = [
         './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-11.png',
         './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-12.png',
         './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-13.png',
@@ -39,7 +42,7 @@ class Character extends MovableObject {
         './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-17.png',
         './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-18.png',
         './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-19.png',
-        './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-20.png'        
+        './img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/LONG_IDLE/I-20.png'
     ];
 
     IMAGES_JUMP = [
@@ -82,6 +85,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMP);
         this.loadImages(this.IMAGES_DEATH);
+        this.loadImages(this.IMAGES_STAND);
         this.loadImages(this.IMAGES_SLEEP);
         this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
@@ -94,7 +98,7 @@ class Character extends MovableObject {
         setInterval(this.move.bind(this), 1000 / this.framerate);
 
         // Change Pics 
-        setInterval(this.changePics.bind(this), 1000 / 10);
+        setInterval(this.changePics.bind(this), 1000 / 5);
     }
 
     move() {
@@ -112,14 +116,15 @@ class Character extends MovableObject {
 
     changePics() {
         if (this.isHurt()) {
-            this.playAnimation(this.IMAGES_HURT);            
+            this.playAnimation(this.IMAGES_HURT);
             this.SOUND_hurt.play();
         } else if (this.isDead && this.pepeIsDead == false) {
             this.playAnimation(this.IMAGES_DEATH);
             /* this.speedY = -10; */
             this.SOUND_death.play();
             this.pepeIsDead = true;
-            setTimeout(() => {                                
+            this.world.MUSIC_GameMusic.pause();
+            setTimeout(() => {
                 document.getElementById('end-screen').classList.remove('d-none');
             }, 500);
         } else if (this.isAboveGround()) {
@@ -129,6 +134,7 @@ class Character extends MovableObject {
             this.SOUND_walking.play();
             this.playAnimation(this.IMAGES_WALKING);    // Pepe Walking animation
         } else {
+            this.playAnimation(this.IMAGES_STAND);
             this.SOUND_walking.pause();
             this.SOUND_jump.pause();
             this.SOUND_jump.currentTime = 0;

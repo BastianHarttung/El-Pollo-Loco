@@ -1,7 +1,7 @@
 class MovableObject extends DrawableObject {
-    
+
     randomNr = 1 + Math.random() * 2;
-    
+
     framerate = 60;
     otherDirection = false;
     /* levelLength = 3000; */
@@ -14,15 +14,33 @@ class MovableObject extends DrawableObject {
 
     lastHit = 0;
 
-        
+
     /**
      * Intervall for Walking Enemies
      * 
      */
     walkingEnemies() {
-        setInterval(() => {
-            this.x -= this.randomNr
-        }, 1000 / this.framerate);
+        let xStart = this.x;
+        let moveDirection = 'left'; 
+        
+        if (this.isDead == false) {
+            setInterval(() => {    
+                if (this.x <= xStart - 200) {
+                    moveDirection = 'right';
+                }
+                if (moveDirection == 'left'){
+                    this.otherDirection = false;
+                    this.x -= this.randomNr;  
+                }        
+                if (this.x >= xStart + 200) {
+                    moveDirection = 'left'
+                }
+                if (moveDirection == 'right'){
+                    this.otherDirection = true;
+                    this.x += this.randomNr;
+                }                              
+            }, 1000 / this.framerate );
+        }     
     }
 
     /**
@@ -52,7 +70,7 @@ class MovableObject extends DrawableObject {
      * Checks if the Object is above Ground
      * @returns Y-Koordinate vom Objekt über Y Koordinate von Ground
      */
-    isAboveGround() {
+    isAboveGround() {        
         return this.y < this.groundY;
     }
 
@@ -80,7 +98,7 @@ class MovableObject extends DrawableObject {
             this.y + this.height > movableObject.y &&
             this.x < movableObject.x &&
             this.y < movableObject.y + movableObject.height
-    }
+    }   
 
     /**
      * If Pepe is hit by chicken he lost energy

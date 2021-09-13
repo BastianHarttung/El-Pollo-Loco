@@ -10,8 +10,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="./img/favicon-chicken.png">
 
     <link rel="stylesheet" href="./style.css">
-    <!-- Font awesome -->
-    <script src="https://kit.fontawesome.com/91e28ba968.js" crossorigin="anonymous"></script>
 
     <script src="./models/drawable-object.class.js"></script>
     <script src="./models/status-bar-life.class.js"></script>
@@ -37,50 +35,60 @@
     <script src="./js/keyboard.class.js"></script>
     <script src="./js/game.js"></script>
 
+    <script src="https://kit.fontawesome.com/91e28ba968.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
     <div class="background-container d-flex-center">
         
-        <div class="border-canvas d-flex-center">
+        <div id="screen-container" class="border-canvas d-flex-center">
             
             <div id="start-screen" class="start-screen">
                 <img src="./img/9.Intro _ Outro Image/Start Screen/Opción2.png">
                 <button class="start-btn" onclick="start()">Start</button>
             </div>
             
-            <canvas id="canvas" width="607px" height="334px"></canvas>
-            
+            <canvas id="canvas" width="607px" height="334px">                
+            </canvas>                       
+
+            <div class="fullscreen-btn" onclick="showFullScreen()"><i class="fas fa-expand"></i></div>
+
             <div id="end-screen" class="end-screen d-none">
                 <img class="game-over-img" src="./img/Game_over_free.png">
                 <img class="dark-screen-img" src="./img/Game_over_BG.png">
             </div>
             
-            <button class="control-btn" onclick="showControls()">Controls</button>
+            <button id="control-btn" class="control-btn" onclick="showControls()">Controls</button>
             
             <div id="controls-container" class="controls-container d-none">
                 <h3>Controls on Keyboard</h3>
                 <div class="control-row">
-                    <div>
-                        <img src="./img/key_Quadrat.png"><i class="fas fa-arrow-left"></i> 
+                    <div class="control-key">
+                        <img src="./img/key_Quadrat.png"><i class="key fas fa-arrow-left"></i> 
                     </div>
-                    <div>
-                        <img src="./img/key_Quadrat.png"><i class="fas fa-arrow-right"></i> 
+                    <div class="control-key">
+                        <img src="./img/key_Quadrat.png"><i class="key fas fa-arrow-right"></i> 
                     </div>
                     <div>= Move Left and Right</div>
                 </div>
                 <div class="control-row">
-                    <div>
-                        <img src="./img/key_Quadrat.png"><i class="fas fa-arrow-up"></i> 
+                    <div class="control-key">
+                        <img src="./img/key_Quadrat.png"><i class="key fas fa-arrow-up"></i> 
                     </div>                    
                     <div>= Jump</div>
                 </div>
                 <div class="control-row">
-                    <div>
-                        <img src="./img/key_Space.png"> 
+                    <div class="control-key">
+                        <img src="./img/key_Space.png"><i class="space">SPACE</i>
                     </div>                    
                     <div>= Throw Bottle</div>
+                </div>
+                <div class="control-row">
+                    <div class="control-key">
+                        <i class="fas fa-expand"></i> 
+                    </div>                    
+                    <div>= Fullscreen</div>
                 </div>
             </div>
         </div>

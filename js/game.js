@@ -15,13 +15,32 @@ function start(){
     console.log('My Enemies are: ' ,world.enemies) */
 }
 
+/**
+ * Show Controls on Screen
+ */
 function showControls() {
     if (showControl == false) {
         document.getElementById('controls-container').classList.remove('d-none');
+        document.getElementById('control-btn').innerHTML = 'Back';
         showControl = true;
     } else {
         document.getElementById('controls-container').classList.add('d-none');
+        document.getElementById('control-btn').innerHTML = 'Controls';
         showControl = false;
+    }    
+}
+
+/**
+ * Enable Fullscreen
+ */
+let isFullscreen = false;
+function showFullScreen() {        
+    if (isFullscreen == false) {
+        canvas.requestFullscreen();
+        isFullscreen = true;
+    } else {
+        document.exitFullscreen();
+        isFullscreen = false;
     }    
 }
 
@@ -29,7 +48,7 @@ function showControls() {
  * Eventlistener for Keyboard press
  */
 document.addEventListener('keydown', (event) => { 
-    //console.log('taste gedrückt', event.code);
+    //console.log('taste gedrückt:', event.code);
 
     if (event.code == 'ArrowRight') {
         keyboard.RIGHT = true;

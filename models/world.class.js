@@ -14,10 +14,14 @@ class World {
 
     character = new Character();
 
+    throwableObjects = [];
+
+    MUSIC_GameMusic = new Audio('./audio/el_pollo_loco-music.mp3');
     SOUND_coinsPickup = new Audio('./audio/money_pickup.mp3');
     SOUND_bottlePickup = new Audio('./audio/bottle_pickup.mp3');
     SOUND_chicken = new Audio('./audio/chicken.mp3');
-
+    SOUND_chickenKill = new Audio('./audio/chicken_kill.mp3');
+    
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -25,6 +29,9 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollisions();
+        this.checkThrowObjects();
+        this.MUSIC_GameMusic.volume = 0.4;
+        this.MUSIC_GameMusic.play();
     }
 
     /**
@@ -56,6 +63,7 @@ class World {
         this.addObjectsToMap(this.level.tequilas);              // Tequilas
         this.addObjectsToMap(this.level.enemies);               /* Enemies */
         this.addToMap(this.character);                          /* Character */
+        this.addObjectsToMap(this.throwableObjects);            // Throw Bottle
         this.ctx.translate(-this.camera_x, 0);
 
         //-----------Space for fixed Objects -----------------
@@ -72,9 +80,7 @@ class World {
         });
     }
 
-    stopDrawing() {
-        console.log('stop drawing')
-    }
+
 
     /**
      * Draw image of movable Object short
@@ -132,17 +138,27 @@ class World {
      * Check Collision from Character with Chicken
      */
     checkCollisionWithEnemies() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.energy > 0) {
-                this.character.hit();       //lost energy   
-                this.soundPlay(this.SOUND_chicken, 1);                 
-                this.statusBar_Life.setPercentage(this.character.energy);
+        this.level.enemies.forEach((enemy, index) => {
+            if (!enemy.isDead) {
+                if (this.character.isColliding(enemy) && !this.character.isAboveGround() && this.character.energy > 0) {
+                    this.character.hit();       //lost energy   
+                    this.soundPlay(this.SOUND_chicken, 1);
+                    this.statusBar_Life.setPercentage(this.character.energy);
 
-                console.log('Getroffen von: ', enemy);
-                console.log('Energy: ', this.character.energy);
+                    console.log('Getroffen von: ', enemy);
+                    console.log('Energy: ', this.character.energy);
 
-                this.character.checkIfDead();
-            };
+                    this.character.checkIfDead();
+                }
+                if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.energy > 0) {
+                    console.log('Chicken killed')                    
+                    enemy.isDead = true;
+                    this.soundPlay(this.SOUND_chickenKill, 1);
+                    setTimeout(() => {
+                        this.level.enemies.splice(index, 1)
+                    }, 1000);
+                }
+            }            
         })
     }
 
@@ -178,10 +194,22 @@ class World {
      * Play sound at Pickup
      * @param {sound new Audio, audio volume} sound 
      */
-    soundPlay(sound,volume) {
+    soundPlay(sound, volume) {
         sound.volume = volume;
         sound.currentTime = 0;
         sound.play();
+    }
+
+    /**
+     * Throw Object (Bottle)
+     */
+    checkThrowObjects() {
+        setInterval(() => {
+            if (this.keyboard.SPACE) {
+                let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 50);
+                this.throwableObjects.push(bottle);
+            }
+        }, 400);
     }
 
     /*-----------------------------Images Flip------------------------------*/

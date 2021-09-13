@@ -1,4 +1,4 @@
-class Tequila extends ThrowableObject {
+class Tequila extends MovableObject {
     y = 210;
     height = 90;
     width = 90;    
@@ -13,27 +13,11 @@ class Tequila extends ThrowableObject {
     //random Image of Images_Sand
     randomImageNumber = Math.floor(Math.random()*this.IMAGES_SAND.length); 
     
-    IMAGES_FLY = [
-        './img/6.botella/Rotación/Mesa de trabajo 1 copia 3.png',
-        './img/6.botella/Rotación/Mesa de trabajo 1 copia 4.png',
-        './img/6.botella/Rotación/Mesa de trabajo 1 copia 5.png',
-        './img/6.botella/Rotación/Mesa de trabajo 1 copia 6.png'
-    ];
-
-    IMAGES_SPLASH = [
-        './img/6.botella/Rotación/Splash de salsa/Mesa de trabajo 1 copia 7.png',
-        './img/6.botella/Rotación/Splash de salsa/Mesa de trabajo 1 copia 8.png',
-        './img/6.botella/Rotación/Splash de salsa/Mesa de trabajo 1 copia 9.png',
-        './img/6.botella/Rotación/Splash de salsa/Mesa de trabajo 1 copia 10.png',
-        './img/6.botella/Rotación/Splash de salsa/Mesa de trabajo 1 copia 11.png',
-        './img/6.botella/Rotación/Splash de salsa/Mesa de trabajo 1 copia 12.png'
-    ];
+    
 
     constructor(x) {        
         super().loadImage(this.IMAGES_SAND[this.randomImageNumber]);        
         this.loadImages(this.IMAGES_SAND);
-        this.loadImages(this.IMAGES_FLY);
-        this.loadImages(this.IMAGES_SPLASH);
         this.x = x + Math.random() * 70;/* 400 + Math.random() * this.levelLength; */ 
         this.applyGravity();       
     }

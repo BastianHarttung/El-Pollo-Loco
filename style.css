@@ -36,6 +36,15 @@ body {
     position: relative;
 }
 
+.fullscreen-btn {
+    color: white;
+    font-size: 30px;
+    position: absolute;
+    right: 140px;
+    bottom: -53px;
+    cursor: pointer;    
+}
+
 .start-screen,
 .end-screen {
     position: absolute;
@@ -92,6 +101,7 @@ body {
     align-items: center;
     position: absolute;  
     z-index: 10;
+    margin: 10px 10px;
 }
 .controls-container h3 {
     font-weight: 100;    
@@ -106,6 +116,23 @@ body {
 }
 .control-row img {
     height: 40px;
+    margin: 10px;
+}
+
+.control-key {
+    position: relative;
+}
+.control-key .key{
+    position: absolute;
+    left: 10px;
+    top: 7px;
+}
+.control-key .space{
+    position: absolute;
+    left: 33px;
+    top: 15px;
+}
+.fas{
     margin: 10px;
 }
 
