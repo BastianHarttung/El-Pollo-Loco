@@ -36,13 +36,28 @@ body {
     position: relative;
 }
 
-.fullscreen-btn {
+.fullscreen-btn,
+.sound-btn-container {
     color: white;
     font-size: 30px;
-    position: absolute;
-    right: 140px;
-    bottom: -53px;
-    cursor: pointer;    
+    position: absolute;    
+    cursor: pointer;  
+}
+.fullscreen-btn {  
+    bottom: -53px;  
+    right: 135px;
+}
+.sound-btn-container {
+    bottom: -46px;
+    right: 195px;
+}
+.sound-btn::before{
+    font-family: 'fontawesome';
+    content: '\f6a9'
+}
+.sound-btn.off::before{
+    font-family: 'fontawesome';
+    content: '\f028';
 }
 
 .start-screen,

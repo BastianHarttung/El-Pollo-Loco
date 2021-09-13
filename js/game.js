@@ -16,6 +16,22 @@ function start(){
 }
 
 /**
+ * Start and stop Music in Game
+ */
+let musicplay = true;
+function musicPlay() {
+    document.querySelector('.sound-btn').classList.toggle('off');
+    if (musicplay) {
+        world.MUSIC_GameMusic.pause()
+        world.MUSIC_GameMusic.currentTime = 0;        
+        musicplay = false;
+    } else {
+        world.MUSIC_GameMusic.play()
+        musicplay = true
+    }    
+}
+
+/**
  * Show Controls on Screen
  */
 function showControls() {
