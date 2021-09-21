@@ -2,7 +2,8 @@ class MovableObject extends DrawableObject {
 
     randomNr = 1 + Math.random() * 2;
 
-    framerate = 60;
+    frameRate = 60;
+
     otherDirection = false;
     /* levelLength = 3000; */
 
@@ -14,33 +15,33 @@ class MovableObject extends DrawableObject {
 
     lastHit = 0;
 
+    world;
 
     /**
      * Intervall for Walking Enemies
      * 
-     */
+     */       
     walkingEnemies() {
         let xStart = this.x;
-        let moveDirection = 'left'; 
-        
-        if (this.isDead == false) {
-            setInterval(() => {    
-                if (this.x <= xStart - 200) {
+        let moveDirection = 'left';
+
+        setInterval(() => {
+             if (this.x <= xStart - 200) {
                     moveDirection = 'right';
                 }
-                if (moveDirection == 'left'){
+                if (moveDirection == 'left') {
                     this.otherDirection = false;
-                    this.x -= this.randomNr;  
-                }        
+                    this.x -= this.randomNr;
+                }
                 if (this.x >= xStart + 200) {
                     moveDirection = 'left'
                 }
-                if (moveDirection == 'right'){
+                if (moveDirection == 'right') {
                     this.otherDirection = true;
                     this.x += this.randomNr;
-                }                              
-            }, 1000 / this.framerate );
-        }     
+                }             
+        }, 1000 / this.frameRate);
+               
     }
 
     /**
@@ -63,14 +64,14 @@ class MovableObject extends DrawableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-        }, 1000 / this.framerate);
+        }, 1000 / this.frameRate);
     }
 
     /**
      * Checks if the Object is above Ground
      * @returns Y-Koordinate vom Objekt über Y Koordinate von Ground
      */
-    isAboveGround() {        
+    isAboveGround() {
         return this.y < this.groundY;
     }
 
@@ -98,7 +99,7 @@ class MovableObject extends DrawableObject {
             this.y + this.height > movableObject.y &&
             this.x < movableObject.x &&
             this.y < movableObject.y + movableObject.height
-    }   
+    }
 
     /**
      * If Pepe is hit by chicken he lost energy

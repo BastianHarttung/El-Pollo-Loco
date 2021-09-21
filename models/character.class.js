@@ -2,14 +2,15 @@ class Character extends MovableObject {
 
     x = 100;
     xmin = 1;
-    /*  xmax = 600; */
+    
     y = 63;           //65
     groundY = 63;   // Boden Y Koordinate
     height = 236;
     width = 120;
     speed = 3.5;    //Change speed at end 3.5
     world;
-
+    pepeIsDead = false;
+    
     IMAGES_WALKING = [
         './img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-21.png',
         './img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-22.png',
@@ -78,7 +79,7 @@ class Character extends MovableObject {
     SOUND_sleep = new Audio('./audio/pepe_sleep.mp3');
     SOUND_hurt = new Audio('./audio/pepe_hurt.wav');
 
-    pepeIsDead = false;
+    
 
     constructor() {
         super().loadImage('./img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png');
@@ -95,7 +96,7 @@ class Character extends MovableObject {
     animate() {
 
         // Move Pepe on X-Axis
-        setInterval(this.move.bind(this), 1000 / this.framerate);
+        setInterval(this.move.bind(this), 1000 / this.frameRate);
 
         // Change Pics 
         setInterval(this.changePics.bind(this), 1000 / 5);
@@ -119,11 +120,10 @@ class Character extends MovableObject {
             this.playAnimation(this.IMAGES_HURT);
             this.SOUND_hurt.play();
         } else if (this.isDead && this.pepeIsDead == false) {
-            this.playAnimation(this.IMAGES_DEATH);
-            /* this.speedY = -10; */
+            this.playAnimation(this.IMAGES_DEATH);            
             this.SOUND_death.play();
             this.pepeIsDead = true;
-            this.world.MUSIC_GameMusic.pause();
+            MUSIC_GameMusic.pause();
             setTimeout(() => {
                 document.getElementById('end-screen').classList.remove('d-none');
             }, 500);

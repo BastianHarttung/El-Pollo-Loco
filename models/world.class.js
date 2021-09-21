@@ -6,6 +6,8 @@ class World {
     camera_x = 0;
     width_background = 1187;
 
+    frameRate = 60;
+
     level = level1;
 
     statusBar_Life = new Statusbar_Life();
@@ -16,7 +18,7 @@ class World {
 
     throwableObjects = [];
 
-    MUSIC_GameMusic = new Audio('./audio/el_pollo_loco-music.mp3');
+    //MUSIC_GameMusic = new Audio('./audio/el_pollo_loco-music.mp3');
     SOUND_coinsPickup = new Audio('./audio/money_pickup.mp3');
     SOUND_bottlePickup = new Audio('./audio/bottle_pickup.mp3');
     SOUND_chicken = new Audio('./audio/chicken.mp3');
@@ -29,9 +31,7 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollisions();
-        this.checkThrowObjects();
-        this.MUSIC_GameMusic.volume = 0.4;
-        this.MUSIC_GameMusic.play();
+        this.checkThrowObjects();        
     }
 
     /**
@@ -39,7 +39,7 @@ class World {
      */
     setWorld() {
         this.character.world = this;
-        this.statusBar_Tequila.world = this;
+        this.statusBar_Tequila.world = this;        
     }
 
     /**
@@ -74,13 +74,14 @@ class World {
         this.addCounterToMap(this.statusBar_Coins.coins_counter, 292);       // Status Coins Count
 
         // Draw() wird immer wieder aufgerufen je nach leistung des pcs
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
+
+        if (!this.character.pepeIsDead) {
+            let self = this;
+            requestAnimationFrame(function () {
+                self.draw();
+            });
+        }        
     }
-
-
 
     /**
      * Draw image of movable Object short
@@ -90,11 +91,8 @@ class World {
         if (movableObject.otherDirection) {
             this.flipImage(movableObject);
         }
-
         movableObject.draw(this.ctx);
-
         movableObject.drawFrame(this.ctx);
-
         if (movableObject.otherDirection) {
             this.flipImageBack(movableObject);
         }
@@ -126,12 +124,9 @@ class World {
     checkCollisions() {
         setInterval(() => {
             this.checkCollisionWithEnemies();
-        }, 200);
-
-        setInterval(() => {
             this.checkCollisionWithCoins();
             this.checkCollisionWithTequila();
-        }, 1000 / 60);
+        }, 1000 / this.frameRate);        
     }
 
     /**
@@ -145,18 +140,20 @@ class World {
                     this.soundPlay(this.SOUND_chicken, 1);
                     this.statusBar_Life.setPercentage(this.character.energy);
 
-                    console.log('Getroffen von: ', enemy);
-                    console.log('Energy: ', this.character.energy);
+                    console.log('Getroffen von: ', enemy); ///////////
+                    console.log('Energy: ', this.character.energy); /////////////
 
                     this.character.checkIfDead();
                 }
                 if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.energy > 0) {
-                    console.log('Chicken killed')                    
+                    
+                    console.log('Chicken killed', enemy)   ////////////////                 
+                    
                     enemy.isDead = true;
                     this.soundPlay(this.SOUND_chickenKill, 1);
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1)
-                    }, 1000);
+                    }, 500);
                 }
             }            
         })
@@ -182,7 +179,7 @@ class World {
     checkCollisionWithTequila() {
         this.level.tequilas.forEach((tequila) => {
             if (this.character.isColliding(tequila)) {
-                this.statusBar_Tequila.tequila_counter++;
+                this.statusBar_Tequila.tequila_counter ++;                
                 this.soundPlay(this.SOUND_bottlePickup, 0.4);
                 const indexTequila = this.level.tequilas.indexOf(tequila);
                 this.level.tequilas.splice(indexTequila, 1)
@@ -200,16 +197,39 @@ class World {
         sound.play();
     }
 
+    /*----------------------Throw Bottle (Throwable Object)------------------- */
     /**
-     * Throw Object (Bottle)
+     * Throw Object (Bottle) if Space is pressed
      */
-    checkThrowObjects() {
+    checkThrowObjects() {        
+        let throwTime = new Date().getTime()
         setInterval(() => {
-            if (this.keyboard.SPACE) {
-                let bottle = new ThrowableObject(this.character.x + 50, this.character.y + 50);
-                this.throwableObjects.push(bottle);
-            }
-        }, 400);
+            if (this.keyboard.SPACE 
+                && this.timeSinceLastThrow(throwTime)
+                && this.enoughCollectedTequilas()) {
+                    let bottle = new ThrowableObject(this.character.x, this.character.y + 70);
+                    this.throwableObjects.push(bottle);
+                    throwTime = new Date().getTime()                
+            }        
+        }, 1000 / this.frameRate);                
+    }
+
+    /**
+     * Check Time since last throw so the bottle can only be thrown
+     * every second
+     * @param {new Date} throwTime 
+     * @returns 
+     */
+    timeSinceLastThrow(throwTime) {
+        return new Date().getTime() - throwTime > 1000
+    }
+
+    /**
+     * Check if enough Bottles Collected
+     * @returns true if its enough tequilas collected
+     */
+    enoughCollectedTequilas() {
+        return world.statusBar_Tequila.tequila_counter > 0
     }
 
     /*-----------------------------Images Flip------------------------------*/

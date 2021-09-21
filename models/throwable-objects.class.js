@@ -1,6 +1,7 @@
 class ThrowableObject extends MovableObject {
     speedY = 30;
     speedX = 20;
+    
 
     groundY = 210;
 
@@ -32,10 +33,17 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        this.speedY = 18;
-        this.applyGravity();
-        setInterval(() => {
-           this.x +=13 
-        }, 22);
+                
+        if (world.statusBar_Tequila.tequila_counter > 0) {  
+            setInterval(() => {
+                this.playAnimation(this.IMAGES_FLY);
+            }, 120);          
+            this.applyGravity();
+            this.speedY = 18;            
+            setInterval(() => {
+            this.x +=13 
+            }, 22);
+            world.statusBar_Tequila.tequila_counter --;
+        }        
     }
 }

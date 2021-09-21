@@ -1,5 +1,4 @@
 class Statusbar_Coins extends DrawableObject {
-
    
     coins_counter = 0;
 
