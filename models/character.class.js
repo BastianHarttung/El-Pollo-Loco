@@ -146,7 +146,7 @@ class Character extends MovableObject {
         } else if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT
             && !this.world.keyboard.UP && !this.world.keyboard.SPACE) {
 
-            if (this.lastMoveLongerThan5s()) {
+            if (this.lastMoveLongerThan6s()) {
                 this.playAnimation(this.IMAGES_SLEEP)                
                 this.SOUND_snoring.play();
             } else {
@@ -169,9 +169,9 @@ class Character extends MovableObject {
         this.SOUND_hurt.currentTime = 0;
     }
 
-    lastMoveLongerThan5s() {
+    lastMoveLongerThan6s() {
         let lastMoveTime = new Date().getTime() - this.lastMove
-        if (lastMoveTime > 5000) {
+        if (lastMoveTime > 6000) {
             return true
         } else {
             return false

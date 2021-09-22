@@ -35,7 +35,7 @@ class World {
         this.setWorld();
         this.checkCollisions();
         this.checkThrowObjects();
-        this.showEndboss();            
+        this.showEndboss();
     }
 
     /**
@@ -138,6 +138,7 @@ class World {
     checkCollisions() {
         setInterval(() => {
             this.checkCollisionWithEnemies();
+            // this.checkCollisionWithEndboss();
             this.checkCollisionWithCoins();
             this.checkCollisionWithTequila();
         }, 1000 / this.frameRate);
@@ -179,6 +180,18 @@ class World {
                 }
             }
         })
+    }
+
+    checkCollisionWithEndboss() {        
+            if (this.character.isColliding(this.level.endboss[0])
+                && (new Date().getTime() - this.lastHit) > 1500) {
+                    console.log('Endboss hurt pepe')                /////////////////////
+                    this.lastHit = new Date().getTime()
+                    this.character.hit();                   //lost energy   
+                    this.soundPlay(this.SOUND_chicken, 1);
+                    this.statusBar_Life.setPercentage(this.character.energy);
+                    this.character.checkIfDead();                
+            }                    
     }
 
     /**
@@ -276,16 +289,17 @@ class World {
     }
 
     /*-------------------------------Endboss---------------------------- */
-    
-
-    showEndboss() {        
+    /**
+     * Start Animation of Endboss if Character walks to the end
+     */
+    showEndboss() {
         let endbossThere = false;
         setInterval(() => {
-            if (this.character.x > 2800 && endbossThere === false) {
-                this.level.endboss[0] = new Endboss()
+            if (this.character.x > 2800 && endbossThere === false) {                
+                this.level.endboss[0].animate()
                 endbossThere = true
             }
-        }, 1000/this.frameRate);        
+        }, 1000 / this.frameRate);
     }
 
 }
