@@ -1,7 +1,7 @@
 class Character extends MovableObject {
 
-    x = 100;
-    xmin = 1;
+    x = 200;
+    xmin = 52;
 
     y = 63;           //65
     groundY = 63;   // Boden Y Koordinate
@@ -9,7 +9,7 @@ class Character extends MovableObject {
     width = 120;
     speed = 3.5;    //Change speed at end 3.5
 
-    lastMove = 0;
+    lastMove = 0;   //To measure Time between last move
 
     world;          //Variables from World like Keyboard
     pepeIsDead = false;
@@ -116,9 +116,7 @@ class Character extends MovableObject {
         if (this.world.keyboard.UP && !this.isAboveGround()) {
             this.jump();
         }
-        this.world.camera_x = -this.x;                      //Move Ground
-        this.world.camera_x_hills = -this.x * 0.5;          //Move Hills
-        this.world.camera_x_cacti = -this.x * 0.8;          //Move Cacti
+        this.world.camera_x = -this.x + 50;                      //Move Background       
     }
 
     changePics() {
@@ -148,7 +146,7 @@ class Character extends MovableObject {
         } else if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT
             && !this.world.keyboard.UP && !this.world.keyboard.SPACE) {
 
-            if (this.lastMoveLongerThan4s()) {
+            if (this.lastMoveLongerThan5s()) {
                 this.playAnimation(this.IMAGES_SLEEP)                
                 this.SOUND_snoring.play();
             } else {
@@ -171,9 +169,9 @@ class Character extends MovableObject {
         this.SOUND_hurt.currentTime = 0;
     }
 
-    lastMoveLongerThan4s() {
+    lastMoveLongerThan5s() {
         let lastMoveTime = new Date().getTime() - this.lastMove
-        if (lastMoveTime > 4000) {
+        if (lastMoveTime > 5000) {
             return true
         } else {
             return false

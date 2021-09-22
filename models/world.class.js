@@ -3,10 +3,8 @@ class World {
     canvas;
     ctx;
     keyboard;
-    
+
     camera_x = 0;
-    camera_x_cacti = 0;
-    camera_x_hills = 0;    
 
     width_background = 1187;
 
@@ -20,7 +18,7 @@ class World {
 
     character = new Character();
 
-    lastHit = new Date().getTime()
+    lastHit = new Date().getTime();
 
     throwableObjects = [];
 
@@ -29,7 +27,7 @@ class World {
     SOUND_bottlePickup = new Audio('./audio/bottle_pickup.mp3');
     SOUND_chicken = new Audio('./audio/chicken.mp3');
     SOUND_chickenKill = new Audio('./audio/chicken_kill.mp3');
-    
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -37,7 +35,7 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollisions();
-        this.checkThrowObjects();        
+        this.checkThrowObjects();
     }
 
     /**
@@ -45,7 +43,7 @@ class World {
      */
     setWorld() {
         this.character.world = this;
-        this.statusBar_Tequila.world = this;        
+        this.statusBar_Tequila.world = this;
     }
 
     /**
@@ -58,17 +56,17 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  /* Clear canvas */
 
         this.addObjectsToMap(this.level.background);     /* Background */
-        
-        this.ctx.translate(this.camera_x_hills, 0); 
-        this.addObjectsToMap(this.level.hills);        
-        this.ctx.translate(-this.camera_x_hills, 0); 
 
-        this.ctx.translate(this.camera_x_cacti, 0); 
+        this.ctx.translate(this.camera_x * 0.6, 0);
+        this.addObjectsToMap(this.level.hills);
+        this.ctx.translate(-this.camera_x * 0.6, 0);
+
+        this.ctx.translate(this.camera_x * 0.8, 0);
         this.addObjectsToMap(this.level.cacti);
-        this.ctx.translate(-this.camera_x_cacti, 0); 
+        this.ctx.translate(-this.camera_x * 0.8, 0);
 
-        this.ctx.translate(this.camera_x, 0);        
-        this.addObjectsToMap(this.level.ground);        
+        this.ctx.translate(this.camera_x, 0);
+        this.addObjectsToMap(this.level.ground);
         this.ctx.translate(-this.camera_x, 0);
 
         //-----------Space for fixed Objects -----------------
@@ -96,7 +94,7 @@ class World {
             requestAnimationFrame(function () {
                 self.draw();
             });
-        }        
+        }
     }
 
     /**
@@ -142,42 +140,44 @@ class World {
             this.checkCollisionWithEnemies();
             this.checkCollisionWithCoins();
             this.checkCollisionWithTequila();
-        }, 1000 / this.frameRate);        
+        }, 1000 / this.frameRate);
     }
 
     /**
      * Check Collision from Character with Chicken
      */
-    checkCollisionWithEnemies() {        
+    checkCollisionWithEnemies() {
         this.level.enemies.forEach((enemy, index) => {
             if (!enemy.isDead) {
-                if (this.character.isColliding(enemy) 
-                    && !this.character.isAboveGround() 
+                if (this.character.isColliding(enemy)
+                    && !this.character.isAboveGround()
                     && this.character.energy > 0
                     && (new Date().getTime() - this.lastHit) > 1500) {
-                        this.lastHit = new Date().getTime()
-                        this.character.hit();       //lost energy   
-                        this.soundPlay(this.SOUND_chicken, 1);
-                        this.statusBar_Life.setPercentage(this.character.energy);
+                    this.lastHit = new Date().getTime()
+                    this.character.hit();                   //lost energy   
+                    this.soundPlay(this.SOUND_chicken, 1);
+                    this.statusBar_Life.setPercentage(this.character.energy);
 
-                        console.log('Getroffen von: ', enemy); ///////////
-                        console.log('Energy: ', this.character.energy); /////////////
+                    console.log('Getroffen von: ', enemy);          ///////////
+                    console.log('Energy: ', this.character.energy); /////////////
 
-                        this.character.checkIfDead();
+                    this.character.checkIfDead();
                 }
-                if (this.character.isColliding(enemy) 
-                    && this.character.isAboveGround() 
+                if (this.character.isColliding(enemy)
+                    && this.character.isAboveGround()
                     && this.character.energy > 0) {
-                    
-                    console.log('Chicken killed', enemy)   ////////////////                 
-                    
+
+                    console.log('Chicken killed', enemy.id)   ////////////////                 
+
                     enemy.isDead = true;
                     this.soundPlay(this.SOUND_chickenKill, 1);
-                    setTimeout(() => {
-                        this.level.enemies.splice(index, 1)
+                    
+                    setTimeout(() => { 
+                        let killedIndex = this.level.enemies.findIndex(x => x.id === enemy.id);                                                                      
+                        this.level.enemies.splice(killedIndex, 1)
                     }, 1000);
                 }
-            }            
+            }
         })
     }
 
@@ -201,7 +201,7 @@ class World {
     checkCollisionWithTequila() {
         this.level.tequilas.forEach((tequila) => {
             if (this.character.isColliding(tequila)) {
-                this.statusBar_Tequila.tequila_counter ++;                
+                this.statusBar_Tequila.tequila_counter++;
                 this.soundPlay(this.SOUND_bottlePickup, 0.4);
                 const indexTequila = this.level.tequilas.indexOf(tequila);
                 this.level.tequilas.splice(indexTequila, 1)
@@ -223,17 +223,17 @@ class World {
     /**
      * Throw Object (Bottle) if Space is pressed
      */
-    checkThrowObjects() {        
+    checkThrowObjects() {
         let throwTime = new Date().getTime()
         setInterval(() => {
-            if (this.keyboard.SPACE 
+            if (this.keyboard.SPACE
                 && this.timeSinceLastThrow(throwTime)
                 && this.enoughCollectedTequilas()) {
-                    let bottle = new ThrowableObject(this.character.x, this.character.y + 70);
-                    this.throwableObjects.push(bottle);
-                    throwTime = new Date().getTime()                
-            }        
-        }, 1000 / this.frameRate);                
+                let bottle = new ThrowableObject(this.character.x, this.character.y + 70);
+                this.throwableObjects.push(bottle);
+                throwTime = new Date().getTime()
+            }
+        }, 1000 / this.frameRate);
     }
 
     /**

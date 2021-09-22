@@ -1,5 +1,7 @@
 class MovableObject extends DrawableObject {
 
+    id = Math.random() *10000;
+
     randomNr = 1 + Math.random() * 2;
 
     frameRate = 60;
