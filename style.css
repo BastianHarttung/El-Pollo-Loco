@@ -14,6 +14,7 @@ body {
 canvas {
     font-family: 'boogalooregular', Arial, Helvetica, sans-serif;
     background-color: black;
+    display: block;
 }
 
 .d-none {
@@ -212,5 +213,18 @@ canvas {
     }
     to {
         opacity: 1;
+    }
+}
+
+/*-----------------Responsive-----------------------*/
+@media only screen and (max-width: 607px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 334px) {
+    canvas {
+        width: 100vh;
     }
 }

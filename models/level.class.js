@@ -1,13 +1,20 @@
 class Level {
-    backgroundObjects;
+    background;
+    hills;
+    cacti;
+    ground;
     clouds;
     enemies;
     coins;
     tequilas;
     level_end_x = 2950;     //Ende des Level Character läuft nicht weiter
 
-    constructor(backgroundObjects, clouds, enemies, coins, tequilas) {
-        this.backgroundObjects = backgroundObjects;
+    constructor(background,hills,cacti,ground, clouds, enemies, coins, tequilas) {
+        
+        this.background = background;
+        this.hills = hills;
+        this.cacti = cacti;
+        this.ground = ground;
         this.clouds = clouds;
         this.enemies = enemies;
         this.coins = coins;

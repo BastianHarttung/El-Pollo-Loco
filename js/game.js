@@ -29,7 +29,6 @@ function start() {
 /**
  * Start and stop Music in Game
  */
-
 function musicPlay() {
     document.querySelector('.sound-btn').classList.toggle('off');
     if (musicplay) {

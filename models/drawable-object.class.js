@@ -9,7 +9,6 @@ class DrawableObject {
     availableImages = {};
     currentImage = 0;
 
-
     /**
      * Load Image on Constructor
      * @param {string} path 

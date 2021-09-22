@@ -26,7 +26,9 @@ class MovableObject extends DrawableObject {
         let moveDirection = 'left';
 
         setInterval(() => {
-             if (this.x <= xStart - 200) {
+
+            if (!this.isDead) {
+                if (this.x <= xStart - 200) {
                     moveDirection = 'right';
                 }
                 if (moveDirection == 'left') {
@@ -40,8 +42,8 @@ class MovableObject extends DrawableObject {
                     this.otherDirection = true;
                     this.x += this.randomNr;
                 }             
-        }, 1000 / this.frameRate);
-               
+            }            
+        }, 1000 / this.frameRate);               
     }
 
     /**

@@ -2,15 +2,18 @@ class Character extends MovableObject {
 
     x = 100;
     xmin = 1;
-    
+
     y = 63;           //65
     groundY = 63;   // Boden Y Koordinate
     height = 236;
     width = 120;
     speed = 3.5;    //Change speed at end 3.5
-    world;
+
+    lastMove = 0;
+
+    world;          //Variables from World like Keyboard
     pepeIsDead = false;
-    
+
     IMAGES_WALKING = [
         './img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-21.png',
         './img/2.Secuencias_Personaje-Pepe-corrección/2.Secuencia_caminata/W-22.png',
@@ -77,9 +80,10 @@ class Character extends MovableObject {
     SOUND_jump = new Audio('./audio/jump_hop.mp3');
     SOUND_death = new Audio('./audio/pepe_death.mp3');
     SOUND_sleep = new Audio('./audio/pepe_sleep.mp3');
+    SOUND_snoring = new Audio('./audio/pepe_snoring.mp3');
     SOUND_hurt = new Audio('./audio/pepe_hurt.wav');
 
-    
+
 
     constructor() {
         super().loadImage('./img/2.Secuencias_Personaje-Pepe-corrección/1.IDLE/IDLE/I-1.png');
@@ -112,34 +116,67 @@ class Character extends MovableObject {
         if (this.world.keyboard.UP && !this.isAboveGround()) {
             this.jump();
         }
-        this.world.camera_x = -this.x;
+        this.world.camera_x = -this.x;                      //Move Ground
+        this.world.camera_x_hills = -this.x * 0.5;          //Move Hills
+        this.world.camera_x_cacti = -this.x * 0.8;          //Move Cacti
     }
 
     changePics() {
+       
         if (this.isHurt()) {
-            this.playAnimation(this.IMAGES_HURT);
+            this.playAnimation(this.IMAGES_HURT);            
             this.SOUND_hurt.play();
+            this.lastMove = new Date().getTime();
         } else if (this.isDead && this.pepeIsDead == false) {
-            this.playAnimation(this.IMAGES_DEATH);            
+            this.playAnimation(this.IMAGES_DEATH);
+            this.stopSounds();
             this.SOUND_death.play();
             this.pepeIsDead = true;
             MUSIC_GameMusic.pause();
             setTimeout(() => {
                 document.getElementById('end-screen').classList.remove('d-none');
             }, 500);
-        } else if (this.isAboveGround()) {
+        } else if (this.isAboveGround()) {            
             this.SOUND_jump.play();
             this.playAnimation(this.IMAGES_JUMP);   // Pepe Jumping animation
+            this.lastMove = new Date().getTime();
         } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-            this.SOUND_walking.play();
+            this.stopSounds();
+            this.SOUND_walking.play();           
             this.playAnimation(this.IMAGES_WALKING);    // Pepe Walking animation
+            this.lastMove = new Date().getTime();
+        } else if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT
+            && !this.world.keyboard.UP && !this.world.keyboard.SPACE) {
+
+            if (this.lastMoveLongerThan4s()) {
+                this.playAnimation(this.IMAGES_SLEEP)                
+                this.SOUND_snoring.play();
+            } else {
+                this.playAnimation(this.IMAGES_STAND);
+                this.stopSounds();
+            }
+        }
+    }
+
+    stopSounds() {
+        this.SOUND_snoring.pause();
+        this.SOUND_snoring.currentTime = 0;
+
+        this.SOUND_walking.pause();
+        
+        this.SOUND_jump.pause();
+        this.SOUND_jump.currentTime = 0;
+        
+        this.SOUND_hurt.pause();
+        this.SOUND_hurt.currentTime = 0;
+    }
+
+    lastMoveLongerThan4s() {
+        let lastMoveTime = new Date().getTime() - this.lastMove
+        if (lastMoveTime > 4000) {
+            return true
         } else {
-            this.playAnimation(this.IMAGES_STAND);
-            this.SOUND_walking.pause();
-            this.SOUND_jump.pause();
-            this.SOUND_jump.currentTime = 0;
-            this.SOUND_hurt.pause();
-            this.SOUND_hurt.currentTime = 0;
+            return false
         }
     }
 }

@@ -2,7 +2,6 @@ class ThrowableObject extends MovableObject {
     speedY = 30;
     speedX = 20;
     
-
     groundY = 210;
 
     IMAGES_FLY = [
@@ -29,7 +28,7 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.width = 90;
         this.height = 90;
-        this.throw();        
+        this.throw();          
     }
 
     throw() {
@@ -37,7 +36,7 @@ class ThrowableObject extends MovableObject {
         if (world.statusBar_Tequila.tequila_counter > 0) {  
             setInterval(() => {
                 this.playAnimation(this.IMAGES_FLY);
-            }, 120);          
+            }, 120);                
             this.applyGravity();
             this.speedY = 18;            
             setInterval(() => {

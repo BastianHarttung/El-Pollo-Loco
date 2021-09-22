@@ -3,7 +3,11 @@ class World {
     canvas;
     ctx;
     keyboard;
+    
     camera_x = 0;
+    camera_x_cacti = 0;
+    camera_x_hills = 0;    
+
     width_background = 1187;
 
     frameRate = 60;
@@ -15,6 +19,8 @@ class World {
     statusBar_Coins = new Statusbar_Coins();
 
     character = new Character();
+
+    lastHit = new Date().getTime()
 
     throwableObjects = [];
 
@@ -51,8 +57,18 @@ class World {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  /* Clear canvas */
 
-        this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.backgroundObjects);     /* Background */
+        this.addObjectsToMap(this.level.background);     /* Background */
+        
+        this.ctx.translate(this.camera_x_hills, 0); 
+        this.addObjectsToMap(this.level.hills);        
+        this.ctx.translate(-this.camera_x_hills, 0); 
+
+        this.ctx.translate(this.camera_x_cacti, 0); 
+        this.addObjectsToMap(this.level.cacti);
+        this.ctx.translate(-this.camera_x_cacti, 0); 
+
+        this.ctx.translate(this.camera_x, 0);        
+        this.addObjectsToMap(this.level.ground);        
         this.ctx.translate(-this.camera_x, 0);
 
         //-----------Space for fixed Objects -----------------
@@ -132,20 +148,26 @@ class World {
     /**
      * Check Collision from Character with Chicken
      */
-    checkCollisionWithEnemies() {
+    checkCollisionWithEnemies() {        
         this.level.enemies.forEach((enemy, index) => {
             if (!enemy.isDead) {
-                if (this.character.isColliding(enemy) && !this.character.isAboveGround() && this.character.energy > 0) {
-                    this.character.hit();       //lost energy   
-                    this.soundPlay(this.SOUND_chicken, 1);
-                    this.statusBar_Life.setPercentage(this.character.energy);
+                if (this.character.isColliding(enemy) 
+                    && !this.character.isAboveGround() 
+                    && this.character.energy > 0
+                    && (new Date().getTime() - this.lastHit) > 1500) {
+                        this.lastHit = new Date().getTime()
+                        this.character.hit();       //lost energy   
+                        this.soundPlay(this.SOUND_chicken, 1);
+                        this.statusBar_Life.setPercentage(this.character.energy);
 
-                    console.log('Getroffen von: ', enemy); ///////////
-                    console.log('Energy: ', this.character.energy); /////////////
+                        console.log('Getroffen von: ', enemy); ///////////
+                        console.log('Energy: ', this.character.energy); /////////////
 
-                    this.character.checkIfDead();
+                        this.character.checkIfDead();
                 }
-                if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.energy > 0) {
+                if (this.character.isColliding(enemy) 
+                    && this.character.isAboveGround() 
+                    && this.character.energy > 0) {
                     
                     console.log('Chicken killed', enemy)   ////////////////                 
                     
@@ -153,7 +175,7 @@ class World {
                     this.soundPlay(this.SOUND_chickenKill, 1);
                     setTimeout(() => {
                         this.level.enemies.splice(index, 1)
-                    }, 500);
+                    }, 1000);
                 }
             }            
         })
