@@ -22,7 +22,6 @@ class World {
 
     throwableObjects = [];
 
-    //MUSIC_GameMusic = new Audio('./audio/el_pollo_loco-music.mp3');
     SOUND_coinsPickup = new Audio('./audio/money_pickup.mp3');
     SOUND_bottlePickup = new Audio('./audio/bottle_pickup.mp3');
     SOUND_chicken = new Audio('./audio/chicken.mp3');
@@ -36,6 +35,7 @@ class World {
         this.setWorld();
         this.checkCollisions();
         this.checkThrowObjects();
+        this.showEndboss();            
     }
 
     /**
@@ -55,27 +55,27 @@ class World {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  /* Clear canvas */
 
-        this.addObjectsToMap(this.level.background);     /* Background */
+        this.addObjectsToMap(this.level.background);            /* Background */
 
         this.ctx.translate(this.camera_x * 0.6, 0);
-        this.addObjectsToMap(this.level.hills);
+        this.addObjectsToMap(this.level.hills);                 //Hills
         this.ctx.translate(-this.camera_x * 0.6, 0);
 
-        this.ctx.translate(this.camera_x * 0.8, 0);
-        this.addObjectsToMap(this.level.cacti);
-        this.ctx.translate(-this.camera_x * 0.8, 0);
+        this.ctx.translate(this.camera_x * 0.85, 0);
+        this.addObjectsToMap(this.level.cacti);                 //Cacti
+        this.ctx.translate(-this.camera_x * 0.85, 0);
 
         this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.ground);
+        this.addObjectsToMap(this.level.ground);                //Ground
         this.ctx.translate(-this.camera_x, 0);
 
-        //-----------Space for fixed Objects -----------------
         this.addObjectsToMap(this.level.clouds);                //Clouds
 
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.coins);                 // Coins
         this.addObjectsToMap(this.level.tequilas);              // Tequilas
         this.addObjectsToMap(this.level.enemies);               /* Enemies */
+        this.addObjectsToMap(this.level.endboss);               /* Endboss */
         this.addToMap(this.character);                          /* Character */
         this.addObjectsToMap(this.throwableObjects);            // Throw Bottle
         this.ctx.translate(-this.camera_x, 0);
@@ -106,7 +106,7 @@ class World {
             this.flipImage(movableObject);
         }
         movableObject.draw(this.ctx);
-        movableObject.drawFrame(this.ctx);
+        movableObject.drawFrame(this.ctx);          //////////////////
         if (movableObject.otherDirection) {
             this.flipImageBack(movableObject);
         }
@@ -171,9 +171,9 @@ class World {
 
                     enemy.isDead = true;
                     this.soundPlay(this.SOUND_chickenKill, 1);
-                    
-                    setTimeout(() => { 
-                        let killedIndex = this.level.enemies.findIndex(x => x.id === enemy.id);                                                                      
+
+                    setTimeout(() => {
+                        let killedIndex = this.level.enemies.findIndex(x => x.id === enemy.id);
                         this.level.enemies.splice(killedIndex, 1)
                     }, 1000);
                 }
@@ -273,6 +273,19 @@ class World {
     flipImageBack(movableObject) {
         movableObject.x = movableObject.x * -1;
         this.ctx.restore();
+    }
+
+    /*-------------------------------Endboss---------------------------- */
+    
+
+    showEndboss() {        
+        let endbossThere = false;
+        setInterval(() => {
+            if (this.character.x > 2800 && endbossThere === false) {
+                this.level.endboss[0] = new Endboss()
+                endbossThere = true
+            }
+        }, 1000/this.frameRate);        
     }
 
 }

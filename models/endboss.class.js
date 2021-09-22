@@ -1,14 +1,14 @@
 class Endboss extends MovableObject {
     x = 3200;
-    y= 18;
-    height=300;
-    width=258;
-    
+    y = 18;
+    height = 300;
+    width = 258;
+
     IMAGES_WALKING = [
         './img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G1.png',
         './img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G2.png',
         './img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G3.png',
-        './img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G4.png'                  
+        './img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G4.png'
     ];
     IMAGES_ALERT = [
         './img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/2.Ateción-ataque/1.Alerta/G5.png',
@@ -41,25 +41,36 @@ class Endboss extends MovableObject {
         './img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G26.png',
     ]
 
-    constructor(){
+    constructor() {
         super().loadImage('./img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G1.png')
-        this.loadImages(this.IMAGES_WALKING); 
-        this.loadImages(this.IMAGES_ALERT);      
-        this.loadImages(this.IMAGES_ATTACK);      
-        this.loadImages(this.IMAGES_HURT);      
-        this.loadImages(this.IMAGES_DEATH);      
-                
-        /* this.walkingEnemies(); */
+        this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_ALERT);
+        this.loadImages(this.IMAGES_ATTACK);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEATH);
 
         this.animate();
     }
 
-    animate(){
+    animate() {
+        this.makeAlert();
+        setTimeout(() => {
+            this.walking();
+        }, 5000);
+        
+    }
+
+    makeAlert() {
         setInterval(() => {
-            let index = this.currentImage % this.IMAGES_ALERT.length; //Modulo Rest von länge des array
-            let path = this.IMAGES_ALERT[index];
-            this.img = this.availableImages[path];
-            this.currentImage++;
-        }, 1000/ (5+ Math.random()*5) );
+            this.playAnimation(this.IMAGES_ALERT)
+        }, 1000 / 5);
+    }
+    walking() {
+        setInterval(() => {
+            this.playAnimation(this.IMAGES_WALKING)
+        }, 1000 / 5);
+        setInterval(() => {
+            this.x -= 2;
+        }, 1000/this.frameRate);        
     }
 }
