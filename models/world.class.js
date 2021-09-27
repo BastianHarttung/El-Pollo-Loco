@@ -138,7 +138,7 @@ class World {
     checkCollisions() {
         setInterval(() => {
             this.checkCollisionWithEnemies();
-            // this.checkCollisionWithEndboss();
+            this.checkCollisionWithEndboss();
             this.checkCollisionWithCoins();
             this.checkCollisionWithTequila();
         }, 1000 / this.frameRate);
@@ -245,7 +245,7 @@ class World {
                 let bottle = new ThrowableObject(this.character.x, this.character.y + 70);
                 this.throwableObjects.push(bottle);
                 throwTime = new Date().getTime()
-            }
+            } 
         }, 1000 / this.frameRate);
     }
 

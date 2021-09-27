@@ -2,7 +2,7 @@ class ThrowableObject extends MovableObject {
     speedY = 30;
     speedX = 20;
     
-    groundY = 210;
+    groundY = 340;
 
     IMAGES_FLY = [
         './img/6.botella/Rotación/Mesa de trabajo 1 copia 3.png',
@@ -20,6 +20,8 @@ class ThrowableObject extends MovableObject {
         './img/6.botella/Rotación/Splash de salsa/Mesa de trabajo 1 copia 12.png'
     ];
 
+    SOUND_Klirr = new Audio('./audio/bottle_klirr.mp3')
+
     constructor(x,y) {
         super().loadImage('./img/6.botella/Rotación/Mesa de trabajo 1 copia 3.png');
         this.loadImages(this.IMAGES_FLY);
@@ -28,21 +30,34 @@ class ThrowableObject extends MovableObject {
         this.y = y;
         this.width = 90;
         this.height = 90;
-        this.throw();          
+        this.throw();        
+         
+        setInterval(this.changePics.bind(this), 120);
+        setInterval(this.sounds.bind(this), 1000 / this.frameRate);
     }
 
-    throw() {
-                
-        if (world.statusBar_Tequila.tequila_counter > 0) {  
-            setInterval(() => {
-                this.playAnimation(this.IMAGES_FLY);
-            }, 120);                
+    throw() {      
             this.applyGravity();
             this.speedY = 18;            
             setInterval(() => {
-            this.x +=13 
+                if (this.y < this.groundY) {
+                    this.x +=13
+                }             
             }, 22);
             world.statusBar_Tequila.tequila_counter --;
-        }        
+    }
+    
+    changePics() {
+        if (this.y > this.groundY - 200) {
+            this.playAnimation(this.IMAGES_SPLASH);                                                                                    
+        }else {
+           this.playAnimation(this.IMAGES_FLY);  
+        }               
+    }
+
+    sounds() {
+        if (this.y > this.groundY -200) {
+            //this.SOUND_Klirr.play()                       
+        }
     }
 }
