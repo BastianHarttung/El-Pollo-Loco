@@ -99,10 +99,20 @@ class MovableObject extends DrawableObject {
      * @returns Formular to check if colliding
      */
     isColliding(movableObject) {
-        return this.x + this.width > movableObject.x &&
-            this.y + this.height > movableObject.y &&
-            this.x < movableObject.x &&
-            this.y < movableObject.y + movableObject.height
+        const x = this.x + this.imageOffsetLeft;
+        const y = this.y + this.imageOffsetTop;
+        const width = this.width - this.imageOffsetRight;
+        const height = this.height - this.imageOffsetBottom;
+
+        const moX = movableObject.x + movableObject.imageOffsetLeft;
+        const moY = movableObject.y + movableObject.imageOffsetTop;
+        const moWidth = movableObject.width - movableObject.imageOffsetRight;
+        const moHeight = movableObject.height - movableObject.imageOffsetBottom;
+
+        return x + width > moX &&
+            y + height > moY &&
+            x < moX &&
+            y < moY + moHeight
     }
 
     /**

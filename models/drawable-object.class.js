@@ -5,6 +5,11 @@ class DrawableObject {
     height = 197;
     width = 100;
 
+    imageOffsetTop = 0;
+    imageOffsetRight = 0;
+    imageOffsetBottom = 0;
+    imageOffsetLeft = 0;
+
     img;
     availableImages = {};
     currentImage = 0;
@@ -54,6 +59,22 @@ class DrawableObject {
             ctx.lineWidth = "2";
             ctx.strokeStyle = "darkorange";
             ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
+
+    drawFrameCollision(ctx) {
+
+        if (this instanceof Character
+            || this instanceof Chicken
+            || this instanceof Chick
+            || this instanceof Endboss
+            || this instanceof Coin
+            || this instanceof Tequila) {
+            ctx.beginPath();
+            ctx.lineWidth = "2";
+            ctx.strokeStyle = "red";
+            ctx.rect(this.x + this.imageOffsetLeft, this.y + this.imageOffsetTop, this.width - this.imageOffsetRight, this.height - this.imageOffsetBottom);
             ctx.stroke();
         }
     }

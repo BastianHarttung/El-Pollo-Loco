@@ -3,15 +3,18 @@ class Character extends MovableObject {
     x = 200;
     xmin = 52;
 
-    y = 63;           //65
-    groundY = 63;   // Boden Y Koordinate
-    height = 236;
+    y = 63;             
+    
+    groundY = 63;       // Ground Y Coordinate
+
+    height = 236;    
     width = 120;
-    speed = 3.5;    //Change speed at end 3.5
+        
+    speed = 3.5;    
 
-    lastMove = 0;   //To measure Time between last move
+    lastMove = 0;       //To measure Time between last move
 
-    world;          //Variables from World like Keyboard
+    world;              //Variables from World like Keyboard
     pepeIsDead = false;
 
     IMAGES_WALKING = [
@@ -93,15 +96,20 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_STAND);
         this.loadImages(this.IMAGES_SLEEP);
         this.loadImages(this.IMAGES_HURT);
+
+        // Offset to correct Collision
+        this.imageOffsetTop = 90;
+        this.imageOffsetRight = 30;
+        this.imageOffsetBottom = 90;
+        this.imageOffsetLeft = 15;
+
         this.applyGravity();
         this.animate();
     }
 
     animate() {
-
         // Move Pepe on X-Axis
         setInterval(this.move.bind(this), 1000 / this.frameRate);
-
         // Change Pics 
         setInterval(this.changePics.bind(this), 1000 / 5);
     }

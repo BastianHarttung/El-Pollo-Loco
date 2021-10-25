@@ -49,6 +49,12 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEATH);
 
+        // Offset to correct Collision
+        this.imageOffsetTop = 50;
+        this.imageOffsetRight = 15;
+        this.imageOffsetBottom = 50;
+        this.imageOffsetLeft = 10;
+
         //this.animate();
     }
 

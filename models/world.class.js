@@ -110,8 +110,10 @@ class World {
         if (movableObject.otherDirection) {
             this.flipImage(movableObject);
         }
-        movableObject.draw(this.ctx);
+        movableObject.draw(this.ctx);         
         movableObject.drawFrame(this.ctx);          //////////////////
+        movableObject.drawFrameCollision(this.ctx);          //////////////////
+
         if (movableObject.otherDirection) {
             this.flipImageBack(movableObject);
         }
@@ -187,6 +189,9 @@ class World {
         })
     }
 
+    /**
+     * Check Collision from Character to Endboss
+     */
     checkCollisionWithEndboss() {        
             if (this.character.isColliding(this.level.endboss[0])
                 && (new Date().getTime() - this.lastHit) > 1500) {

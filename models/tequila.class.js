@@ -19,6 +19,13 @@ class Tequila extends MovableObject {
         super().loadImage(this.IMAGES_SAND[this.randomImageNumber]);        
         this.loadImages(this.IMAGES_SAND);
         this.x = x + Math.random() * 70;/* 400 + Math.random() * this.levelLength; */ 
+        
+        // Offset to correct Collision
+        this.imageOffsetTop = 10;
+        this.imageOffsetRight = 30;
+        this.imageOffsetBottom = 10;
+        this.imageOffsetLeft = 15;
+
         this.applyGravity();       
     }
 }
