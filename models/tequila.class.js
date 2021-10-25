@@ -12,9 +12,7 @@ class Tequila extends MovableObject {
     
     //random Image of Images_Sand
     randomImageNumber = Math.floor(Math.random()*this.IMAGES_SAND.length); 
-    
-    
-
+        
     constructor(x) {        
         super().loadImage(this.IMAGES_SAND[this.randomImageNumber]);        
         this.loadImages(this.IMAGES_SAND);

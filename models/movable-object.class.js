@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     frameRate = 60;
 
     moveDirection;
+    otherDirection = false;
     /* levelLength = 3000; */
 
     speedY = 0;             // For Gravity
@@ -110,7 +111,7 @@ class MovableObject extends DrawableObject {
 
         return x + width > moX &&
             y + height > moY &&
-            x < moX &&
+            x < moX + moWidth &&
             y < moY + moHeight
     }
 

@@ -63,8 +63,7 @@ class Endboss extends MovableObject {
         setTimeout(() => {
             this.walking();
         }, 5000);
-        
-        
+
     }
 
     makeAlert() {
@@ -77,10 +76,9 @@ class Endboss extends MovableObject {
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING)
         }, 1000 / 5);
-        
-        let xstart = this.x;      
-            setInterval(() => {                           
-                this.x -= 2; 
-            }, 1000/this.frameRate);
+
+        setInterval(() => {
+            this.x -= 2;
+        }, 1000 / this.frameRate);
     }
 }

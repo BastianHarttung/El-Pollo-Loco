@@ -70,7 +70,8 @@ class DrawableObject {
             || this instanceof Chick
             || this instanceof Endboss
             || this instanceof Coin
-            || this instanceof Tequila) {
+            || this instanceof Tequila
+            || this instanceof ThrowableObject) {
             ctx.beginPath();
             ctx.lineWidth = "2";
             ctx.strokeStyle = "red";

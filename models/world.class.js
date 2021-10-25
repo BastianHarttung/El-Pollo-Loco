@@ -36,9 +36,9 @@ class World {
         this.wall.src = './img/wall.png';
         this.draw();
         this.setWorld();
-        this.checkCollisions();
         this.checkThrowObjects();
         this.showEndboss();
+        this.checkCollisions();
     }
 
     /**
@@ -59,9 +59,9 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  /* Clear canvas */
 
         this.addObjectsToMap(this.level.background);            /* Background */
- 
+
         this.addObjectsToMap(this.level.clouds);                //Clouds
-  
+
         this.ctx.translate(this.camera_x * 0.6, 0);
         this.addObjectsToMap(this.level.hills);                 //Hills
         this.ctx.translate(-this.camera_x * 0.6, 0);
@@ -72,7 +72,7 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.ground);                //Ground
-        this.ctx.translate(-this.camera_x, 0); 
+        this.ctx.translate(-this.camera_x, 0);
 
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.coins);                 // Coins
@@ -85,7 +85,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
 
         //-----------Space for fixed Objects -----------------
-        
+
         this.addToMap(this.statusBar_Life);                     // Health Bar
         this.addToMap(this.statusBar_Tequila);                              // Status Tequila
         this.addCounterToMap(this.statusBar_Tequila.tequila_counter, 210);   //  Status Tequila Count
@@ -110,9 +110,9 @@ class World {
         if (movableObject.otherDirection) {
             this.flipImage(movableObject);
         }
-        movableObject.draw(this.ctx);         
-        movableObject.drawFrame(this.ctx);          //////////////////
-        movableObject.drawFrameCollision(this.ctx);          //////////////////
+        movableObject.draw(this.ctx);
+        movableObject.drawFrame(this.ctx);                  //////////////////
+        movableObject.drawFrameCollision(this.ctx);         //////////////////
 
         if (movableObject.otherDirection) {
             this.flipImageBack(movableObject);
@@ -127,6 +127,7 @@ class World {
             this.addToMap(object);
         })
     }
+
     /**
      * Counter Number to Status
      */
@@ -146,6 +147,7 @@ class World {
         setInterval(() => {
             this.checkCollisionWithEnemies();
             this.checkCollisionWithEndboss();
+            this.checkCollisionBottleWithEndboss();
             this.checkCollisionWithCoins();
             this.checkCollisionWithTequila();
         }, 1000 / this.frameRate);
@@ -192,17 +194,31 @@ class World {
     /**
      * Check Collision from Character to Endboss
      */
-    checkCollisionWithEndboss() {        
-            if (this.character.isColliding(this.level.endboss[0])
-                && (new Date().getTime() - this.lastHit) > 1500) {
-                    console.log('Endboss hurt pepe')                /////////////////////
-                    this.lastHit = new Date().getTime()
-                    this.character.hit();                   //lost energy   
-                    this.soundPlay(this.SOUND_chicken, 1);
-                    this.statusBar_Life.setPercentage(this.character.energy);
-                    this.character.checkIfDead();                
-            }                    
+    checkCollisionWithEndboss() {
+        if (this.character.isColliding(this.level.endboss[0])
+            && (new Date().getTime() - this.lastHit) > 1500) {
+            console.log('Endboss hurt pepe')                /////////////////////
+            this.lastHit = new Date().getTime()
+            this.character.hit();                   //lost energy   
+            this.soundPlay(this.SOUND_chicken, 1);
+            this.statusBar_Life.setPercentage(this.character.energy);
+            this.character.checkIfDead();
+        }
     }
+
+    /**
+     * Check Collision if Bottle hits Endboss
+     */
+    checkCollisionBottleWithEndboss() {
+        this.throwableObjects.forEach((bottle) => {
+            if (bottle !== undefined) {
+                if (this.level.endboss[0].isColliding(bottle)) {
+                    console.log('Bottle hit Endboss')
+                }
+            }
+        })
+    }
+
 
     /**
      * Check Collision from Character to collect Coins
@@ -256,7 +272,7 @@ class World {
                 let bottle = new ThrowableObject(this.character.x, this.character.y + 70);
                 this.throwableObjects.push(bottle);
                 throwTime = new Date().getTime()
-            } 
+            }
         }, 1000 / this.frameRate);
     }
 
@@ -306,7 +322,7 @@ class World {
     showEndboss() {
         let endbossThere = false;
         setInterval(() => {
-            if (this.character.x > 2800 && endbossThere === false) {                
+            if (this.character.x > 2800 && endbossThere === false) {
                 this.level.endboss[0].animate()
                 endbossThere = true
             }
