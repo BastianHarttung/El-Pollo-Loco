@@ -215,7 +215,9 @@ class World {
                 if (this.level.endboss[0].isColliding(bottle)) {
                     bottle.playAnimation(bottle.IMAGES_SPLASH);
                     this.soundPlay(bottle.SOUND_Klirr, 0.9); 
-                    console.log('Bottle hit Endboss')       ////////////////////
+                    console.log('Bottle hit Endboss');       ////////////////////
+                    this.level.endboss[0].energy -= 20;
+                    this.level.endboss[0].endbossWalking = false;
                 }
             }
         })
@@ -324,7 +326,7 @@ class World {
         let endbossThere = false;
         setInterval(() => {
             if (this.character.x > 2800 && endbossThere === false) {
-                this.level.endboss[0].animate()
+                this.level.endboss[0].startAnimation()
                 endbossThere = true
             }
         }, 1000 / this.frameRate);
