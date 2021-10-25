@@ -213,12 +213,13 @@ class World {
         this.throwableObjects.forEach((bottle) => {
             if (bottle !== undefined) {
                 if (this.level.endboss[0].isColliding(bottle)) {
-                    console.log('Bottle hit Endboss')
+                    bottle.playAnimation(bottle.IMAGES_SPLASH);
+                    this.soundPlay(bottle.SOUND_Klirr, 0.9); 
+                    console.log('Bottle hit Endboss')       ////////////////////
                 }
             }
         })
     }
-
 
     /**
      * Check Collision from Character to collect Coins
