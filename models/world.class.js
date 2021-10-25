@@ -18,6 +18,8 @@ class World {
 
     character = new Character();
 
+    wall = new Wall();
+
     lastHit = new Date().getTime();
 
     throwableObjects = [];
@@ -31,6 +33,7 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.wall.src = './img/wall.png';
         this.draw();
         this.setWorld();
         this.checkCollisions();
@@ -56,7 +59,9 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  /* Clear canvas */
 
         this.addObjectsToMap(this.level.background);            /* Background */
-
+ 
+        this.addObjectsToMap(this.level.clouds);                //Clouds
+  
         this.ctx.translate(this.camera_x * 0.6, 0);
         this.addObjectsToMap(this.level.hills);                 //Hills
         this.ctx.translate(-this.camera_x * 0.6, 0);
@@ -67,9 +72,7 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.ground);                //Ground
-        this.ctx.translate(-this.camera_x, 0);
-
-        this.addObjectsToMap(this.level.clouds);                //Clouds
+        this.ctx.translate(-this.camera_x, 0); 
 
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.coins);                 // Coins
@@ -78,9 +81,11 @@ class World {
         this.addObjectsToMap(this.level.endboss);               /* Endboss */
         this.addToMap(this.character);                          /* Character */
         this.addObjectsToMap(this.throwableObjects);            // Throw Bottle
+        this.addToMap(this.wall);                               // Wall
         this.ctx.translate(-this.camera_x, 0);
 
         //-----------Space for fixed Objects -----------------
+        
         this.addToMap(this.statusBar_Life);                     // Health Bar
         this.addToMap(this.statusBar_Tequila);                              // Status Tequila
         this.addCounterToMap(this.statusBar_Tequila.tequila_counter, 210);   //  Status Tequila Count
