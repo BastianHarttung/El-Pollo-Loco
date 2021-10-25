@@ -6,7 +6,7 @@ class MovableObject extends DrawableObject {
 
     frameRate = 60;
 
-    otherDirection = false;
+    moveDirection;
     /* levelLength = 3000; */
 
     speedY = 0;             // For Gravity
@@ -24,23 +24,22 @@ class MovableObject extends DrawableObject {
      * 
      */       
     walkingEnemies() {
-        let xStart = this.x;
-        let moveDirection = 'left';
+        let xStart = this.x;        
 
         setInterval(() => {
 
             if (!this.isDead) {
                 if (this.x <= xStart - 200) {
-                    moveDirection = 'right';
+                    this.moveDirection = 'right';
                 }
-                if (moveDirection == 'left') {
+                if (this.moveDirection == 'left') {
                     this.otherDirection = false;
                     this.x -= this.randomNr;
                 }
                 if (this.x >= xStart + 200) {
-                    moveDirection = 'left'
+                    this.moveDirection = 'left'
                 }
-                if (moveDirection == 'right') {
+                if (this.moveDirection == 'right') {
                     this.otherDirection = true;
                     this.x += this.randomNr;
                 }             

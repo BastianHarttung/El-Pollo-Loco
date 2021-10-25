@@ -97,6 +97,8 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_SLEEP);
         this.loadImages(this.IMAGES_HURT);
 
+        this.moveDirection = 'right';
+
         // Offset to correct Collision
         this.imageOffsetTop = 90;
         this.imageOffsetRight = 30;
@@ -117,9 +119,11 @@ class Character extends MovableObject {
     move() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.moveRight();
+            this.moveDirection = 'right'
         }
         if (this.world.keyboard.LEFT && this.x > this.xmin) {
             this.moveLeft();
+            this.moveDirection = 'left'
         }
         if (this.world.keyboard.UP && !this.isAboveGround()) {
             this.jump();

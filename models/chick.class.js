@@ -16,6 +16,8 @@ class Chick extends MovableObject{
         super().loadImage('./img/3.Secuencias_Enemy_básico/Versión_pollito/2.Centro.png')
         this.loadImages(this.IMAGES_WALKING);
         this.x= x; /* + Math.random() * 100; */
+
+        this.moveDirection = 'left';
         
         this.walkingEnemies();
 

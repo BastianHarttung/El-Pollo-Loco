@@ -1,8 +1,16 @@
 class Wall extends MovableObject {
-    x = -10;
-    y = 95;
+    //Kaktus
+    /*x = -30;
+    y = 50;
     
-    height = 210;
+    height = 250;
+    width = 116; */
+
+    //Wall
+    x = -5;
+    y = 50;
+    
+    height = 250;
     width = 90;
    
     constructor() {

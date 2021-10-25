@@ -251,7 +251,8 @@ class World {
         setInterval(() => {
             if (this.keyboard.SPACE
                 && this.timeSinceLastThrow(throwTime)
-                && this.enoughCollectedTequilas()) {
+                && this.enoughCollectedTequilas()
+                && this.character.moveDirection === 'right') {
                 let bottle = new ThrowableObject(this.character.x, this.character.y + 70);
                 this.throwableObjects.push(bottle);
                 throwTime = new Date().getTime()
