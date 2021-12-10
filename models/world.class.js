@@ -15,6 +15,7 @@ class World {
     statusBar_Life = new Statusbar_Life();
     statusBar_Tequila = new Statusbar_Tequila();
     statusBar_Coins = new Statusbar_Coins();
+    statusBar_Endboss = new Statusbar_Endboss();
 
     character = new Character();
 
@@ -77,29 +78,29 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.coins);                 // Coins
         this.addObjectsToMap(this.level.tequilas);              // Tequilas
-        this.addObjectsToMap(this.level.enemies);               /* Enemies */
-        this.addObjectsToMap(this.level.endboss);               /* Endboss */
-        this.addToMap(this.character);                          /* Character */
+        this.addObjectsToMap(this.level.enemies);               // Enemies
+        this.addToMap(this.statusBar_Endboss);                  // Life Endboss
+        this.addObjectsToMap(this.level.endboss);               // Endboss
+        this.addToMap(this.character);                          // Character
         this.addObjectsToMap(this.throwableObjects);            // Throw Bottle
         this.addToMap(this.wall);                               // Wall
         this.ctx.translate(-this.camera_x, 0);
 
         //-----------Space for fixed Objects -----------------
 
-        this.addToMap(this.statusBar_Life);                     // Health Bar
-        this.addToMap(this.statusBar_Tequila);                              // Status Tequila
+        this.addToMap(this.statusBar_Life);                                     // Health Bar
+        this.addToMap(this.statusBar_Tequila);                                  // Status Tequila
         this.addCounterToMap(this.statusBar_Tequila.tequila_counter, 210);   //  Status Tequila Count
-        this.addToMap(this.statusBar_Coins);                                // Status Coins
+        this.addToMap(this.statusBar_Coins);                                    // Status Coins
         this.addCounterToMap(this.statusBar_Coins.coins_counter, 292);       // Status Coins Count
 
         // Draw() wird immer wieder aufgerufen je nach leistung des pcs
-
         if (!this.character.pepeIsDead) {
             let self = this;
             requestAnimationFrame(function () {
                 self.draw();
             });
-        }
+        };
     }
 
     /**
@@ -111,8 +112,8 @@ class World {
             this.flipImage(movableObject);
         }
         movableObject.draw(this.ctx);
-        movableObject.drawFrame(this.ctx);                  //////////////////
-        movableObject.drawFrameCollision(this.ctx);         //////////////////
+        movableObject.drawFrame(this.ctx);                  //////////////////TODO delete before public
+        movableObject.drawFrameCollision(this.ctx);         //////////////////TODO delete before public
 
         if (movableObject.otherDirection) {
             this.flipImageBack(movableObject);
@@ -168,8 +169,8 @@ class World {
                     this.soundPlay(this.SOUND_chicken, 1);
                     this.statusBar_Life.setPercentage(this.character.energy);
 
-                    console.log('Getroffen von: ', enemy);          ///////////
-                    console.log('Energy: ', this.character.energy); /////////////
+                    console.log('Getroffen von: ', enemy);          //TODO delete
+                    console.log('Energy: ', this.character.energy); //TODO delete
 
                     this.character.checkIfDead();
                 }
@@ -177,7 +178,7 @@ class World {
                     && this.character.isAboveGround()
                     && this.character.energy > 0) {
 
-                    console.log('Chicken killed', enemy.id)   ////////////////                 
+                    console.log('Chicken killed', enemy.id)   //TODO delete
 
                     enemy.isDead = true;
                     this.soundPlay(this.SOUND_chickenKill, 1);
@@ -197,9 +198,9 @@ class World {
     checkCollisionWithEndboss() {
         if (this.character.isColliding(this.level.endboss[0])
             && (new Date().getTime() - this.lastHit) > 1500) {
-            console.log('Endboss hurt pepe')                /////////////////////
+            console.log('Endboss hurt pepe')                    //TODO delete
             this.lastHit = new Date().getTime()
-            this.character.hit();                   //lost energy   
+            this.character.hit();                               //lost energy
             this.soundPlay(this.SOUND_chicken, 1);
             this.statusBar_Life.setPercentage(this.character.energy);
             this.character.checkIfDead();
@@ -215,7 +216,7 @@ class World {
                 if (this.level.endboss[0].isColliding(bottle)) {
                     bottle.playAnimation(bottle.IMAGES_SPLASH);
                     this.soundPlay(bottle.SOUND_Klirr, 0.9); 
-                    console.log('Bottle hit Endboss');       ////////////////////
+                    console.log('Bottle hit Endboss');          //TODO delete
                     this.level.endboss[0].energy -= 20;
                     this.level.endboss[0].endbossWalking = false;
                 }
@@ -283,7 +284,7 @@ class World {
      * Check Time since last throw so the bottle can only be thrown
      * every second
      * @param {new Date} throwTime 
-     * @returns 
+     * @returns {boolean} true if Time since last throw is above 1000ms
      */
     timeSinceLastThrow(throwTime) {
         return new Date().getTime() - throwTime > 1000
@@ -327,6 +328,7 @@ class World {
         setInterval(() => {
             if (this.character.x > 2800 && endbossThere === false) {
                 this.level.endboss[0].startAnimation()
+                this.statusBar_Endboss.movingWithEndboss()
                 endbossThere = true
             }
         }, 1000 / this.frameRate);

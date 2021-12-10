@@ -41,7 +41,8 @@ class Endboss extends MovableObject {
         './img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G24.png',
         './img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G25.png',
         './img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/4.Muerte/G26.png',
-    ]
+    ];
+
 
     constructor() {
         super().loadImage('./img/4.Secuencias_Enemy_gigantón-Doña_Gallinota-/1.Caminata/G1.png')
@@ -56,7 +57,6 @@ class Endboss extends MovableObject {
         this.imageOffsetRight = 15;
         this.imageOffsetBottom = 50;
         this.imageOffsetLeft = 10;
-
     }
 
     startAnimation() {
