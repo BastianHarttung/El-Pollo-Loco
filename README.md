@@ -3,7 +3,8 @@ Pepe is attacked by angry little chicken and he has to jump on it
 to destroy them.\
 At the the End El-Pollo-Loco is coming and want to kill 
 Pepe. He has to throw Bottles at him to kill it and 
-save the World.
+save the World.\
+Test the Game: http://bastian-harttung.developerakademie.com/El-Pollo-Loco/index.html
 
 A nice funny Game written in JavaScript
 
